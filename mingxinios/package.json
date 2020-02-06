@@ -1,0 +1,31 @@
+{
+	"name": "mingxin",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "react-native start",
+		"ios": "react-native run-ios --device 'CoolHao'",
+		"test": "jest"
+	},
+	"dependencies": {
+		"react": "16.0.0-alpha.6",
+		"react-native": "0.44.3",
+		"react-native-camera": "^1.1.4",
+		"react-native-cli": "^2.0.1",
+		"react-native-device-info": "^0.24.3",
+		"react-native-image-picker": "^0.26.10",
+		"react-native-log-ios": "^1.0.1",
+		"react-native-modal": "^6.5.0",
+		"react-native-wechat": "^1.9.9",
+		"react-navigation": "^2.5.3"
+	},
+	"devDependencies": {
+		"babel-jest": "23.2.0",
+		"babel-preset-react-native": "4.0.0",
+		"jest": "23.2.0",
+		"react-test-renderer": "16.0.0-alpha.6"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
+}
