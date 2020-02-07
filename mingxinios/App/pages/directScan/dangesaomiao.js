@@ -12,7 +12,7 @@ import {
     TouchableOpacity,
     ScrollView,
     AsyncStorage,
-    BackHandler, ListView
+    BackHandler, ListView, TouchableHighlight
 } from 'react-native';
 
 
@@ -20,6 +20,8 @@ import utils from '../../utils/utils'
 import loadingImage from '../../img/loading.gif'
 
 var urls = '';
+var data = [];
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 const {width, height} = Dimensions.get('window');
 import Toast from '../../Components/Toast'
 import Modals from 'react-native-modal'
@@ -37,52 +39,30 @@ export default class mingxin extends Component {
         super(props);
         this.state = {
             loaded: false,
+            dataSource: ds.cloneWithRows(data),
             ReceiveCode: '',
-            dayCounts: '',
-            monthsCounts: '',
-            names: [],
-            showgonghao: true,
+            tiaoma: '',
+            showtiaoma: true,
         };
     }
 
     getName(val) {
-        if (val.id == 116) {
+        if (val.id == 1013) {
             this.setState({
-                saoGongHName: val.name
+                tiaoxingma: val.name
             })
         }
-        //工序号
-        // if(val.id==116){
-        //   this.setState({
-        //     saoGongHName: val.name
-        //   })
-        // }
-
+        if (val.id == 119) {
+            this.setState({
+                shuliang: val.name
+            })
+        }
         if (val.id == 68) {
             this.setState({
                 saoyiSName: val.name
             })
         }
-        if (val.id == 122) {
-            this.setState({
-                dayName: val.name
-            })
-        }
-        if (val.id == 123) {
-            this.setState({
-                monthName: val.name
-            })
-        }
-        if (val.id == 120) {
-            this.setState({  // 此员工号不存在
-                errorMessage: val.name
-            })
-        }
-        if (val.id == 118) { // 该员工已离职
-            this.setState({
-                errorMessageName: val.name
-            })
-        }
+
         if (val.id == 129) {
             this.setState({
                 message129: val.name
@@ -105,22 +85,23 @@ export default class mingxin extends Component {
                 //this.state.names = JSON.parse(result)
             }
         })
-        AsyncStorage.getItem('systemDefault', (error, result) => {
-            var res = JSON.parse(result);
-            if (result != null) {
-                this.setState({
-                    saveYuan: res[0].saveYuan,
-                    showgonghao: !res[0].saveYuan,
-                })
-                if (res[0].saveYuan) {
-                    this.getData(this.state.names.userno)
-                }
-            } else {
-                this.setState({
-                    saveYuan: false,
-                })
-            }
-        })
+        // AsyncStorage.getItem('systemDefault', (error, result) => {
+        //     var res = JSON.parse(result);
+        //     if (result != null) {
+        // this.setState({
+        //     saveYuan: res[0].saveYuan,
+        //     showgonghao: !res[0].saveYuan,
+        // })
+        // if (res[0].saveYuan) {
+        //     this.getData(this.state.names.userno)
+        // }
+        // } else {
+        // this.setState({
+        //     saveYuan: false,
+        // })
+        // }
+
+        // })
         AsyncStorage.getItem('langArr', (error, result) => {
             var res = JSON.parse(result)
             //console.log(res)
@@ -130,14 +111,14 @@ export default class mingxin extends Component {
                     if (val.pid == 46) {
                         return newArr.push(val)
                     }
-                    if (val.id == 7) {
+                    if (val.id == 1012) {
                         this.setState({
                             titleName: val.name
                         })
                     }
                 })
-                //console.log(newArr)
-                newArr.forEach((val, index) => {
+                // alert(JSON.stringify(newArr))
+                newArr.forEach((val,index)=>{
                     this.getName(val)
                 })
             } else {
@@ -157,9 +138,8 @@ export default class mingxin extends Component {
             }
         })
         this.setState({
-            ReceiveCode: '',
-            dayCounts: '',
-            monthsCounts: ''
+            dataSource: ds.cloneWithRows(data),
+            tiaoma: ''
         })
         this.read();
     }
@@ -184,51 +164,70 @@ export default class mingxin extends Component {
                     <Text style={styles.nameStyles}>
                         {this.state.titleName}
                     </Text>
-                    //
                     <View style={styles.formStyles}>
-                        <Text style={styles.textStyles}>{this.state.saoGongHName}:</Text>
+                        <Text style={styles.textStyles}>{this.state.tiaoxingma}:</Text>
                         <TextInput
                             style={styles.inputStyles}
                             underlineColorAndroid="transparent"
-                            editable={this.state.showgonghao}
-                            onChangeText={(e) => this.setState({ReceiveCode: e})}
-                            value={this.state.saveYuan ? this.state.names.userno : this.state.ReceiveGongHao}
+                            editable={this.state.showtiaoma}
+                            onChangeText={(e) => this.setState({tiaoma: e})}
+                            value={this.state.tiaoma}
                             onEndEditing={(event) => (
                                 this.getData(event.nativeEvent.text)
                             )}
                         />
-                        {
-                            this.state.saveYuan ?
-                                <Text style={{width: 32, height: 36}}></Text> :
-                                <TouchableOpacity style={styles.scanStyles}
-                                                  onPress={() => this.props.navigation.navigate('Saoma', {
-                                                      callBack: (e) => {
-                                                          this.getData(e)
-                                                      }
-                                                  })}>
-                                    <Image style={{width: 20, height: 20}} source={{uri: 'saomab'}}/>
-                                    <Text style={{fontSize: 8, color: '#000000'}}>{this.state.saoyiSName}</Text>
-                                </TouchableOpacity>
-                        }
+                        <TouchableOpacity style={styles.scanStyles}
+                                          onPress={() => this.props.navigation.navigate('Saoma', {
+                                              callBack: (e) => {
+                                                  this.getData(e)
+                                              }
+                                          })}>
+                            <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
+                            <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saomaBtn}</Text>
+                        </TouchableOpacity>
                     </View>
-                    {/*<View style={styles.dataStyles}>*/}
-                    {/*    <View style={styles.headerStyles}>*/}
-                    {/*        <Text style={{flex:1,textAlign:'center',fontSize:12}}>{this.state.tiaomaName}</Text>*/}
-                    {/*        <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.message155}</Text>*/}
-                    {/*        <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.saomiaoName}</Text>*/}
-                    {/*        <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.message156}</Text>*/}
-                    {/*        <Text style={{flex:0.4,textAlign:'center',fontSize:12}}>{this.state.caozuoName}</Text>*/}
-                    {/*    </View>*/}
-
-                    {/*    <ListView*/}
-                    {/*        dataSource={this.state.dataSource}*/}
-                    {/*        renderRow={this.renderRow.bind(this)}*/}
-                    {/*        enableEmptySections={true}*/}
-                    {/*        pageSize={5}*/}
-                    {/*        initialListSize={5}*/}
-                    {/*        style={{height:100}}*/}
+                    {/*<View style={styles.formStyles}>*/}
+                    {/*    <Text style={styles.textStyles}>{this.state.dayName}:</Text>*/}
+                    {/*    <TextInput*/}
+                    {/*        style={styles.inputStyles}*/}
+                    {/*        underlineColorAndroid="transparent"*/}
+                    {/*        editable= {false}*/}
+                    {/*        value={this.state.dayCounts}*/}
                     {/*    />*/}
+                    {/*    <View style={styles.scanStyles}>*/}
+
+                    {/*    </View>*/}
                     {/*</View>*/}
+                    {/*<View style={styles.formStyles}>*/}
+                    {/*    <Text style={styles.textStyles}>{this.state.monthName}:</Text>*/}
+                    {/*    <TextInput*/}
+                    {/*        editable={false}*/}
+                    {/*        style={styles.inputStyles}*/}
+                    {/*        underlineColorAndroid="transparent"*/}
+                    {/*        value={this.state.monthsCounts}*/}
+                    {/*    />*/}
+                    {/*    <View style={styles.scanStyles}>*/}
+
+                    {/*    </View>*/}
+                    {/*</View>*/}
+                    <View style={styles.dataStyles}>
+                        <View style={styles.headerStyles}>
+                            <Text style={{flex:1,textAlign:'center',fontSize:12}}>{this.state.tiaoxingma}</Text>
+                            <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.riqi}</Text>
+                            <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.shuliang}</Text>
+                            {/*<Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.message156}</Text>*/}
+                            {/*<Text style={{flex:0.4,textAlign:'center',fontSize:12}}>{this.state.caozuoName}</Text>*/}
+                        </View>
+
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={this.renderRow.bind(this)}
+                            enableEmptySections={true}
+                            pageSize={5}
+                            initialListSize={5}
+                            style={{height:100}}
+                        />
+                    </View>
                 </ScrollView>
                 {/* <Modal
              animationType='fade'
@@ -286,9 +285,13 @@ export default class mingxin extends Component {
             loaded: true,
             ReceiveCode: e
         })
-        var timestamp = Date.parse(new Date()) / 1000;
-        const url = urls + "/index.php/api/index/chafei?&yuangonghao=" + e + "&riqi=" + timestamp;
-        console.log(url)
+        // var timestamp = Date.parse(new Date()) / 1000;
+        // this.setState({
+        //     loaded: false,
+        //     ReceiveCode: e
+        // })
+        const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
+        // console.log(url)
         return Promise.race([
             fetch(url),
             new Promise(function (resolve, reject) {
@@ -307,27 +310,29 @@ export default class mingxin extends Component {
             .then((json) => {
                 console.log(json)
                 if (json.state === 'success') {
-                    if (json.data[0].r08a029 == 1) {
-                        this.refs.toast.show(this.state.errorMessageName, 3000);
-                        //alert(this.state.errorMessageName)
-                        _that.setState({
-                            ReceiveGongHao: '',
-                            loaded: false,
-                        })
-                    } else {
+                    data.push(json.data);
+                    // if (json.data[0].r08a029 == 1) {
+                    //     this.refs.toast.show(this.state.errorMessageName, 3000);
+                    //     //alert(this.state.errorMessageName)
+                    //     _that.setState({
+                    //         ReceiveGongHao: '',
+                    //         loaded: false,
+                    //     })
+                    // } else {
                         this.setState({
                             //ReceiveCode:'',
+                            dataSource: ds.cloneWithRows(data),
                             loaded: false,
-                            dayCounts: json.data[0].zhongfeishu,
-                            monthsCounts: json.data[0].shijishuliang
+                            // dayCounts: json.data[0].zhongfeishu,
+                            // monthsCounts: json.data[0].shijishuliang
                         });
-                    }
+                    // }
                     //console.error(goodsc);
                 } else if (json.state == 'error') {
                     this.setState({
                         loaded: false,
-                        dayCounts: '',
-                        monthsCounts: ''
+                        // dayCounts: '',
+                        // monthsCounts: ''
                     })
                     if (json.msgcode == '004') {
                         this.refs.toast.show(this.state.message129, 3000);
@@ -348,9 +353,61 @@ export default class mingxin extends Component {
             });
     }
 
+    //条码信息渲染
+    renderRow(rowData: string, sectionID: number, rowID: number) {
+        //console.error(goodsc);
+        return (
+            <TouchableHighlight
+                style={[styles.countsContainer, {backgroundColor: 'white', paddingVertical: 4}]}
+                underlayColor='gray'
+                // onPress={() => {
+                //     this._editRow(rowData, rowID);
+                // }}
+            >
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{flex:1,textAlign:'center',fontSize:10}}>{rowData.tiaoma}</Text>
+                    <Text style={{flex:0.6,textAlign:'center',fontSize:10}}>{rowData.riqi}</Text>
+                    <Text style={{flex:0.6,textAlign:'center',fontSize:10}} onPress={() => {
+                        delete data[rowID];
+                        var data = [];
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i] != null) {
+                                data.push(data[i]);
+                            }
+                        }
+                        data = data;
+                        //console.error(goodsc);
+                        this.setState({
+                            // hangshu: goodsc.length,
+                            // saomiaoshu: '',
+                            // ReceiveCode: '',
+                            // kucun: '',
+                            dataSource: ds.cloneWithRows(data),
+                            // huoquValue: ''
+                        })
+                        // this.countsadd();
+                        //console.error(goodsc)
+                    }}>{rowData.shuliang}</Text>
+                    {/*<Text*/}
+                    {/*    style={{flex: 0.4, textAlign: 'center', backgroundColor: '#87caf5', fontSize: 10}}*/}
+                    {/*    ></Text>*/}
+                </View>
+            </TouchableHighlight>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
+    countsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingVertical: 1,
+        backgroundColor: 'white',
+        width: width - 20,
+        borderBottomWidth: 1,
+        borderColor: 'gray',
+    },
     scanStyles: {
         flexDirection: 'column',
         justifyContent: 'center',
