@@ -16,6 +16,7 @@
 		"react-native-image-picker": "^0.26.10",
 		"react-native-log-ios": "^1.0.1",
 		"react-native-modal": "^6.5.0",
+		"react-native-table-component": "^1.2.1",
 		"react-native-wechat": "^1.9.9",
 		"react-navigation": "^2.5.3"
 	},

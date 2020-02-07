@@ -4062,6 +4062,11 @@ react-native-tab-view@^1.0.0:
   dependencies:
     prop-types "^15.6.1"
 
+react-native-table-component@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.npm.taobao.org/react-native-table-component/download/react-native-table-component-1.2.1.tgz#5f1e0f159b1dff9df0d5601c4a5ab99d1aa99a25"
+  integrity sha1-Xx4PFZsd/53w1WAcSlq5nRqpmiU=
+
 react-native-wechat@^1.9.9:
   version "1.9.9"
   resolved "http://registry.npm.taobao.org/react-native-wechat/download/react-native-wechat-1.9.9.tgz#acc4f7f22a3aeae13671108bcee39cbcb023c23a"

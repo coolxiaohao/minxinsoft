@@ -14,7 +14,7 @@ import {
     AsyncStorage,
     BackHandler, ListView, TouchableHighlight
 } from 'react-native';
-
+import {Table,TableWrapper,Row,Rows,Col,Cols,Cell} from 'react-native-table-component';
 
 import utils from '../../utils/utils'
 import loadingImage from '../../img/loading.gif'
@@ -35,6 +35,9 @@ export default class mingxin extends Component {
         },
     };
 
+
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -43,6 +46,13 @@ export default class mingxin extends Component {
             ReceiveCode: '',
             tiaoma: '',
             showtiaoma: true,
+            tableHead: ['Head', 'Head2', 'Head3', 'Head4'],
+            tableData: [
+                ['1', '2', '3', '4'],
+                ['a', 'b', 'c', 'd'],
+                ['1', '2', '3', '456\n789'],
+                ['a', 'b', 'c', 'd']
+            ]
         };
     }
 
@@ -210,23 +220,29 @@ export default class mingxin extends Component {
 
                     {/*    </View>*/}
                     {/*</View>*/}
-                    <View style={styles.dataStyles}>
-                        <View style={styles.headerStyles}>
-                            <Text style={{flex:1,textAlign:'center',fontSize:12}}>{this.state.tiaoxingma}</Text>
-                            <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.riqi}</Text>
-                            <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.shuliang}</Text>
-                            {/*<Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.message156}</Text>*/}
-                            {/*<Text style={{flex:0.4,textAlign:'center',fontSize:12}}>{this.state.caozuoName}</Text>*/}
-                        </View>
+                    {/*<View style={styles.dataStyles}>*/}
+                    {/*    <View style={styles.headerStyles}>*/}
+                    {/*        <Text style={{flex:1,textAlign:'center',fontSize:12}}>{this.state.tiaoxingma}</Text>*/}
+                    {/*        <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.riqi}</Text>*/}
+                    {/*        <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.shuliang}</Text>*/}
+                    {/*        /!*<Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.message156}</Text>*!/*/}
+                    {/*        /!*<Text style={{flex:0.4,textAlign:'center',fontSize:12}}>{this.state.caozuoName}</Text>*!/*/}
+                    {/*    </View>*/}
 
-                        <ListView
-                            dataSource={this.state.dataSource}
-                            renderRow={this.renderRow.bind(this)}
-                            enableEmptySections={true}
-                            pageSize={5}
-                            initialListSize={5}
-                            style={{height:100}}
-                        />
+                    {/*    <ListView*/}
+                    {/*        dataSource={this.state.dataSource}*/}
+                    {/*        renderRow={this.renderRow.bind(this)}*/}
+                    {/*        enableEmptySections={true}*/}
+                    {/*        pageSize={5}*/}
+                    {/*        initialListSize={5}*/}
+                    {/*        style={{height:100}}*/}
+                    {/*    />*/}
+                    {/*</View>*/}
+                    <View style={styles.container}>
+                        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                            <Row data={this.state.tableHead} style={styles.head} textStyle={styles.text}/>
+                            <Rows data={this.state.tableData} textStyle={styles.text}/>
+                        </Table>
                     </View>
                 </ScrollView>
                 {/* <Modal
@@ -275,6 +291,12 @@ export default class mingxin extends Component {
         );
     }
 
+    // render() {
+    //     const state = this.state;
+    //     return (
+    //
+    //     )
+    // }
     getData(e) {
         _that = this;
         if (e == '') {
@@ -354,47 +376,47 @@ export default class mingxin extends Component {
     }
 
     //条码信息渲染
-    renderRow(rowData: string, sectionID: number, rowID: number) {
-        //console.error(goodsc);
-        return (
-            <TouchableHighlight
-                style={[styles.countsContainer, {backgroundColor: 'white', paddingVertical: 4}]}
-                underlayColor='gray'
-                // onPress={() => {
-                //     this._editRow(rowData, rowID);
-                // }}
-            >
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={{flex:1,textAlign:'center',fontSize:10}}>{rowData.tiaoma}</Text>
-                    <Text style={{flex:0.6,textAlign:'center',fontSize:10}}>{rowData.riqi}</Text>
-                    <Text style={{flex:0.6,textAlign:'center',fontSize:10}} onPress={() => {
-                        delete data[rowID];
-                        var data = [];
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i] != null) {
-                                data.push(data[i]);
-                            }
-                        }
-                        data = data;
-                        //console.error(goodsc);
-                        this.setState({
-                            // hangshu: goodsc.length,
-                            // saomiaoshu: '',
-                            // ReceiveCode: '',
-                            // kucun: '',
-                            dataSource: ds.cloneWithRows(data),
-                            // huoquValue: ''
-                        })
-                        // this.countsadd();
-                        //console.error(goodsc)
-                    }}>{rowData.shuliang}</Text>
-                    {/*<Text*/}
-                    {/*    style={{flex: 0.4, textAlign: 'center', backgroundColor: '#87caf5', fontSize: 10}}*/}
-                    {/*    ></Text>*/}
-                </View>
-            </TouchableHighlight>
-        )
-    }
+    // renderRow(rowData: string, sectionID: number, rowID: number) {
+    //     //console.error(goodsc);
+    //     return (
+    //         <TouchableHighlight
+    //             style={[styles.countsContainer, {backgroundColor: 'white', paddingVertical: 4}]}
+    //             underlayColor='gray'
+    //             // onPress={() => {
+    //             //     this._editRow(rowData, rowID);
+    //             // }}
+    //         >
+    //             <View style={{flexDirection: 'row'}}>
+    //                 <Text style={{flex:1,textAlign:'center',fontSize:10}}>{rowData.tiaoma}</Text>
+    //                 <Text style={{flex:0.6,textAlign:'center',fontSize:10}}>{rowData.riqi}</Text>
+    //                 <Text style={{flex:0.6,textAlign:'center',fontSize:10}} onPress={() => {
+    //                     delete data[rowID];
+    //                     var data = [];
+    //                     for (var i = 0; i < data.length; i++) {
+    //                         if (data[i] != null) {
+    //                             data.push(data[i]);
+    //                         }
+    //                     }
+    //                     data = data;
+    //                     //console.error(goodsc);
+    //                     this.setState({
+    //                         // hangshu: goodsc.length,
+    //                         // saomiaoshu: '',
+    //                         // ReceiveCode: '',
+    //                         // kucun: '',
+    //                         dataSource: ds.cloneWithRows(data),
+    //                         // huoquValue: ''
+    //                     })
+    //                     // this.countsadd();
+    //                     //console.error(goodsc)
+    //                 }}>{rowData.shuliang}</Text>
+    //                 {/*<Text*/}
+    //                 {/*    style={{flex: 0.4, textAlign: 'center', backgroundColor: '#87caf5', fontSize: 10}}*/}
+    //                 {/*    ></Text>*/}
+    //             </View>
+    //         </TouchableHighlight>
+    //     )
+    // }
 }
 
 const styles = StyleSheet.create({
@@ -441,13 +463,16 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         flex: 1
     },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#ffffff',
-        position: 'relative',
-    },
+    // container: {
+    //     flex: 1,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    //     backgroundColor: '#ffffff',
+    //     position: 'relative',
+    // },
+    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+    head: { height: 40, backgroundColor: '#f1f8ff' },
+    text: { margin: 6 },
     nameStyles: {
         fontSize: 26,
         textAlign: 'center',
