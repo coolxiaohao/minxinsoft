@@ -3,24 +3,28 @@ import {
     StyleSheet,
     Text,
     View,
-    Alert,
+    // Alert,
+    // RefreshControl,
     Image,
     Dimensions,
     TextInput,
-    ToastAndroid,
-    Modal,
+    // ToastAndroid,
+    // Modal,
     TouchableOpacity,
     ScrollView,
     AsyncStorage,
-    BackHandler, ListView, TouchableHighlight
+    BackHandler,
+    ListView,
+    TouchableHighlight
 } from 'react-native';
-import {Table,TableWrapper,Row,Rows,Col,Cols,Cell} from 'react-native-table-component';
-
+// import {Table, TableWrapper, Row, Rows, Col, Cols, Cell} from 'react-native-table-component';
+// import CustomList from "../../Components/CustomList";
 import utils from '../../utils/utils'
 import loadingImage from '../../img/loading.gif'
 
 var urls = '';
 var data = [];
+var tableData: [];
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 const {width, height} = Dimensions.get('window');
 import Toast from '../../Components/Toast'
@@ -35,9 +39,6 @@ export default class mingxin extends Component {
         },
     };
 
-
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -46,15 +47,44 @@ export default class mingxin extends Component {
             ReceiveCode: '',
             tiaoma: '',
             showtiaoma: true,
-            tableHead: ['Head', 'Head2', 'Head3', 'Head4'],
-            tableData: [
-                ['1', '2', '3', '4'],
-                ['a', 'b', 'c', 'd'],
-                ['1', '2', '3', '456\n789'],
-                ['a', 'b', 'c', 'd']
-            ]
+            notelang: [],
+            lang: '',
         };
+        // this.onLoad()
     }
+
+    //渲染
+    // renderRow(item) {
+    //     return <View style={styles.row}>
+    //         <TouchableOpacity onPress={() => {//点击一行显示姓名，要用到TouchableOpacity组件
+    //             // this.toast.show('你单击了：' + item.fullName, DURATION.LENGTH_LONG)
+    //         }}>
+    //             <Text style={styles.text1}>姓名：{item.fullName}</Text>
+    //             <Text style={styles.text2}>邮箱：{item.email}</Text>
+    //             <Text style={styles.text3}>time：{item.time}</Text>
+    //         </TouchableOpacity>
+    //     </View>
+    // }
+
+    renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
+        return <View key={rowID} style={styles.line}></View>
+    }
+
+    // renderFooter() {
+    //     // return <Image style={{width:400,height:100}} source={{uri:'http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png'}}></Image>
+    //     return <View style={{justifyContent: "center", height: 20, alignItems: 'center'}}>
+    //         <Text style={styles.tip}>我是有底线的</Text>
+    //     </View>
+    // }
+
+    // 刷新的状态，时间2s
+    // onLoad() {
+    //     setTimeout(() => {
+    //         this.setState({
+    //             isLoading: false
+    //         })
+    //     }, 2000)
+    // }
 
     getName(val) {
         if (val.id == 1013) {
@@ -91,33 +121,26 @@ export default class mingxin extends Component {
                 this.setState({
                     names: JSON.parse(result)
                 })
+                // console.error(result)
                 //console.error(this.state.names.user_token)
                 //this.state.names = JSON.parse(result)
             }
         })
-        // AsyncStorage.getItem('systemDefault', (error, result) => {
-        //     var res = JSON.parse(result);
-        //     if (result != null) {
-        // this.setState({
-        //     saveYuan: res[0].saveYuan,
-        //     showgonghao: !res[0].saveYuan,
-        // })
-        // if (res[0].saveYuan) {
-        //     this.getData(this.state.names.userno)
-        // }
-        // } else {
-        // this.setState({
-        //     saveYuan: false,
-        // })
-        // }
-
-        // })
         AsyncStorage.getItem('langArr', (error, result) => {
             var res = JSON.parse(result)
-            //console.log(res)
+            // console.error(res)
             if (result != null) {
                 var newArr = []
                 res.map((val) => {
+                    if (val.code == 'cn'){
+                        this.setState({
+                            lang: 'cn'
+                        })
+                    }else {
+                        this.setState({
+                            lang: 'en'
+                        })
+                    }
                     if (val.pid == 46) {
                         return newArr.push(val)
                     }
@@ -128,18 +151,33 @@ export default class mingxin extends Component {
                     }
                 })
                 // alert(JSON.stringify(newArr))
-                newArr.forEach((val,index)=>{
+                newArr.forEach((val, index) => {
                     this.getName(val)
                 })
             } else {
                 console.log(error)
             }
         })
+        // AsyncStorage.getItem('lang',(error,result)=>{
+        //     //console.log(JSON.parse(result))
+        //     var res = JSON.parse(result);
+        //     console.error(res)
+        //     if(result != null){
+        //         this.setState({
+        //             ishuoquK: res[0].ishuoquK,
+        //         })
+        //     }else{
+        //         this.setState({
+        //             ishuoquK: false
+        //         })
+        //     }
+        // })
     }
 
     componentDidMount() {
         AsyncStorage.getItem('dataBase', (error, result) => {
             var res = JSON.parse(result)
+            // console.error(res)
             console.log(res)
             if (res != null) {
                 urls = 'http://' + res[0].ipValue + ':' + res[0].serviceportValue
@@ -149,7 +187,8 @@ export default class mingxin extends Component {
         })
         this.setState({
             dataSource: ds.cloneWithRows(data),
-            tiaoma: ''
+            tiaoma: '',
+            // dataString:'',data
         })
         this.read();
     }
@@ -170,94 +209,60 @@ export default class mingxin extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView style={{paddingVertical: 0,}}>
-                    <Text style={styles.nameStyles}>
-                        {this.state.titleName}
-                    </Text>
-                    <View style={styles.formStyles}>
-                        <Text style={styles.textStyles}>{this.state.tiaoxingma}:</Text>
-                        <TextInput
-                            style={styles.inputStyles}
-                            underlineColorAndroid="transparent"
-                            editable={this.state.showtiaoma}
-                            onChangeText={(e) => this.setState({tiaoma: e})}
-                            value={this.state.tiaoma}
-                            onEndEditing={(event) => (
-                                this.getData(event.nativeEvent.text)
-                            )}
+                <ScrollView style={{paddingVertical: 0, width: '100%'}}>
+                    <View style={styles.chaxun}>
+                        <Text style={styles.nameStyles}>
+                            {this.state.titleName}
+                        </Text>
+                        <View style={styles.formStyles}>
+                            <Text style={styles.textStyles}>{this.state.tiaoxingma}:</Text>
+                            <TextInput
+                                style={styles.inputStyles}
+                                underlineColorAndroid="transparent"
+                                editable={this.state.showtiaoma}
+                                onChangeText={(e) => this.setState({tiaoma: e})}
+                                value={this.state.tiaoma}
+                                onEndEditing={(event) => (
+                                    this.getData(event.nativeEvent.text)
+                                )}
+                            />
+                            <TouchableOpacity style={styles.scanStyles}
+                                              onPress={() => this.props.navigation.navigate('Saoma', {
+                                                  callBack: (e) => {
+                                                      this.getData(e)
+                                                  }
+                                              })}>
+                                <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
+                                <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.tablecontent}>
+                        <ListView
+                            enableEmptySections={true}
+                            dataSource={this.state.dataSource}//关联state中的datasource
+                            renderRow={(item) => this.renderRow(item)}//制定listView的显示效果
+                            //行与行之间的分割线，用renderSeparator实现
+                            renderSeparator={(sectionID, rowID, adjacentRowHighlighted) =>
+                                this.renderSeparator(sectionID, rowID, adjacentRowHighlighted)
+                            }
+                            //页脚，底部的图片和文字，提示性，图片和文字都可以
+                            // renderFooter={() => this.renderFooter()}
+                            // 下拉刷新，要用到RefreshControl，需要导入
+                            // refreshControl={
+                            //     <RefreshControl refreshing={this.state.isLoading} onRefresh={() => this.onLoad()}/>
+                            // }
                         />
-                        <TouchableOpacity style={styles.scanStyles}
-                                          onPress={() => this.props.navigation.navigate('Saoma', {
-                                              callBack: (e) => {
-                                                  this.getData(e)
-                                              }
-                                          })}>
-                            <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
-                            <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saomaBtn}</Text>
-                        </TouchableOpacity>
+                        <Toast
+                            ref={toast => {
+                                this.toast = toast
+                            }}
+                        />
                     </View>
-                    {/*<View style={styles.formStyles}>*/}
-                    {/*    <Text style={styles.textStyles}>{this.state.dayName}:</Text>*/}
-                    {/*    <TextInput*/}
-                    {/*        style={styles.inputStyles}*/}
-                    {/*        underlineColorAndroid="transparent"*/}
-                    {/*        editable= {false}*/}
-                    {/*        value={this.state.dayCounts}*/}
-                    {/*    />*/}
-                    {/*    <View style={styles.scanStyles}>*/}
 
-                    {/*    </View>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.formStyles}>*/}
-                    {/*    <Text style={styles.textStyles}>{this.state.monthName}:</Text>*/}
-                    {/*    <TextInput*/}
-                    {/*        editable={false}*/}
-                    {/*        style={styles.inputStyles}*/}
-                    {/*        underlineColorAndroid="transparent"*/}
-                    {/*        value={this.state.monthsCounts}*/}
-                    {/*    />*/}
-                    {/*    <View style={styles.scanStyles}>*/}
-
-                    {/*    </View>*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.dataStyles}>*/}
-                    {/*    <View style={styles.headerStyles}>*/}
-                    {/*        <Text style={{flex:1,textAlign:'center',fontSize:12}}>{this.state.tiaoxingma}</Text>*/}
-                    {/*        <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.riqi}</Text>*/}
-                    {/*        <Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.shuliang}</Text>*/}
-                    {/*        /!*<Text style={{flex:0.6,textAlign:'center',fontSize:12}}>{this.state.message156}</Text>*!/*/}
-                    {/*        /!*<Text style={{flex:0.4,textAlign:'center',fontSize:12}}>{this.state.caozuoName}</Text>*!/*/}
-                    {/*    </View>*/}
-
-                    {/*    <ListView*/}
-                    {/*        dataSource={this.state.dataSource}*/}
-                    {/*        renderRow={this.renderRow.bind(this)}*/}
-                    {/*        enableEmptySections={true}*/}
-                    {/*        pageSize={5}*/}
-                    {/*        initialListSize={5}*/}
-                    {/*        style={{height:100}}*/}
-                    {/*    />*/}
-                    {/*</View>*/}
-                    <View style={styles.container}>
-                        <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                            <Row data={this.state.tableHead} style={styles.head} textStyle={styles.text}/>
-                            <Rows data={this.state.tableData} textStyle={styles.text}/>
-                        </Table>
-                    </View>
                 </ScrollView>
-                {/* <Modal
-             animationType='fade'
-             transparent={true}
-             visible={this.state.loaded}
-             onShow={() => {}}
-             onRequestClose={() => {}} >
-             <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor:'rgba(0, 0, 0, 0.5)'}}>
-                <View style={{width: 100,height: 100,backgroundColor: '#ffffff',borderRadius:10,justifyContent:'center',alignItems:'center'}}>
-                  <Image source={loadingImage} style={{width:30,height:30,alignSelf:'center',marginBottom: 10}}></Image>
-                  <Text>Loading...</Text>
-                </View>
-             </View>
-          </Modal> */}
+
+
                 <Modals
                     isVisible={this.state.loaded}
                     onBackButtonPress={() => this.setState({loaded: false})}
@@ -302,7 +307,7 @@ export default class mingxin extends Component {
         if (e == '') {
             return
         }
-        ;
+        // alert(e)
         this.setState({
             loaded: true,
             ReceiveCode: e
@@ -313,7 +318,7 @@ export default class mingxin extends Component {
         //     ReceiveCode: e
         // })
         const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
-        // console.log(url)
+        // alert(url)
         return Promise.race([
             fetch(url),
             new Promise(function (resolve, reject) {
@@ -330,26 +335,20 @@ export default class mingxin extends Component {
                 }
             })
             .then((json) => {
-                console.log(json)
+                // console.error()json)
                 if (json.state === 'success') {
-                    data.push(json.data);
-                    // if (json.data[0].r08a029 == 1) {
-                    //     this.refs.toast.show(this.state.errorMessageName, 3000);
-                    //     //alert(this.state.errorMessageName)
-                    //     _that.setState({
-                    //         ReceiveGongHao: '',
-                    //         loaded: false,
-                    //     })
-                    // } else {
-                        this.setState({
-                            //ReceiveCode:'',
-                            dataSource: ds.cloneWithRows(data),
-                            loaded: false,
-                            // dayCounts: json.data[0].zhongfeishu,
-                            // monthsCounts: json.data[0].shijishuliang
-                        });
-                    // }
-                    //console.error(goodsc);
+                    data = json.data;
+
+                    this.setState({
+                        //ReceiveCode:'',
+                        tiaoma: e,
+                        dataSource: ds.cloneWithRows(data),
+                        loaded: false,
+                        notelang: data.en_or_cn
+                        // dataString: text
+                        // dayCounts: json.data[0].zhongfeishu,
+                        // monthsCounts: json.data[0].shijishuliang
+                    });
                 } else if (json.state == 'error') {
                     this.setState({
                         loaded: false,
@@ -367,6 +366,8 @@ export default class mingxin extends Component {
 
             })
             .catch((error) => {
+
+                // console.error(error)
                 this.setState({
                     loaded: false
                 })
@@ -375,51 +376,49 @@ export default class mingxin extends Component {
             });
     }
 
-    //条码信息渲染
-    // renderRow(rowData: string, sectionID: number, rowID: number) {
-    //     //console.error(goodsc);
-    //     return (
-    //         <TouchableHighlight
-    //             style={[styles.countsContainer, {backgroundColor: 'white', paddingVertical: 4}]}
-    //             underlayColor='gray'
-    //             // onPress={() => {
-    //             //     this._editRow(rowData, rowID);
-    //             // }}
-    //         >
-    //             <View style={{flexDirection: 'row'}}>
-    //                 <Text style={{flex:1,textAlign:'center',fontSize:10}}>{rowData.tiaoma}</Text>
-    //                 <Text style={{flex:0.6,textAlign:'center',fontSize:10}}>{rowData.riqi}</Text>
-    //                 <Text style={{flex:0.6,textAlign:'center',fontSize:10}} onPress={() => {
-    //                     delete data[rowID];
-    //                     var data = [];
-    //                     for (var i = 0; i < data.length; i++) {
-    //                         if (data[i] != null) {
-    //                             data.push(data[i]);
-    //                         }
-    //                     }
-    //                     data = data;
-    //                     //console.error(goodsc);
-    //                     this.setState({
-    //                         // hangshu: goodsc.length,
-    //                         // saomiaoshu: '',
-    //                         // ReceiveCode: '',
-    //                         // kucun: '',
-    //                         dataSource: ds.cloneWithRows(data),
-    //                         // huoquValue: ''
-    //                     })
-    //                     // this.countsadd();
-    //                     //console.error(goodsc)
-    //                 }}>{rowData.shuliang}</Text>
-    //                 {/*<Text*/}
-    //                 {/*    style={{flex: 0.4, textAlign: 'center', backgroundColor: '#87caf5', fontSize: 10}}*/}
-    //                 {/*    ></Text>*/}
-    //             </View>
-    //         </TouchableHighlight>
-    //     )
-    // }
+    //
+    renderRow(item) {
+        let list = [];
+        // let arrdata = [];
+        // console.error(item.r49b001)
+
+        // console.error(arrdata)
+        this.state.notelang.map((val,index) => {
+            let ziduan = '';
+            // alert(val.ziduan)
+            for (let i in item){
+                ziduan=item[val.ziduan];
+                // ziduan = item[val.ziduan];
+                // console.error(item['r49b001'])
+                // arrdata.push(item);
+            }
+            if (this.state.lang == 'cn'){
+                list.push(<Text style={styles.texts}>{val.zhongwen}: {ziduan}</Text>);
+            }else {
+                list.push(<Text style={styles.texts}>{val.yinwen}: {ziduan}</Text>);
+            }
+
+        });
+        return <View style={styles.row}>
+            <TouchableOpacity onPress={() => {//点击一行显示姓名，要用到TouchableOpacity组件
+                // this.toast.show('你单击了：' + item.fullName, DURATION.LENGTH_LONG)
+            }}>
+                {list}
+            </TouchableOpacity>
+        </View>
+    }
+
 }
 
 const styles = StyleSheet.create({
+    tablecontent: {
+        // height:200,
+        borderRadius: 10,
+        backgroundColor: '#ffffff',
+        margin: 5,
+        marginTop: 15,
+        paddingBottom: 5,
+    },
     countsContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
@@ -439,41 +438,47 @@ const styles = StyleSheet.create({
         flex: 0.2
     },
     formStyles: {
+        backgroundColor: '#e5f7ff',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: width - 40,
         marginTop: 10,
-        marginBottom: 10,
+        marginLeft: 10,
+        paddingTop: 30,
+        paddingBottom: 10,
+        borderRadius: 10,
+        // marginBottom: 10,
     },
     textStyles: {
         color: '#000000',
         fontSize: 18,
         marginRight: 10,
-        flex: 0.6,
+        flex: 0.4,
         textAlign: 'right'
     },
     inputStyles: {
         width: 180,
         backgroundColor: 'white',
-        borderRadius: 20,
+        borderRadius: 6,
         height: 40,
         paddingLeft: 20,
         borderColor: '#c8c8c8',
         borderWidth: 1,
         flex: 1
     },
-    // container: {
-    //     flex: 1,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     backgroundColor: '#ffffff',
-    //     position: 'relative',
-    // },
-    container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    head: { height: 40, backgroundColor: '#f1f8ff' },
-    text: { margin: 6 },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f5f7f9',
+        position: 'relative',
+    },
+    tablecontainer: {flex: 1, padding: 16, paddingTop: 20},
+    head: {height: 40, backgroundColor: '#21b9fc'},
+    text: {margin: 6},
     nameStyles: {
+        backgroundColor: '#ffffff',
         fontSize: 26,
         textAlign: 'center',
         margin: 0,
@@ -486,5 +491,30 @@ const styles = StyleSheet.create({
         margin: 0,
         color: '#000000'
     },
+    chaxun: {
+        backgroundColor: '#ffffff',
+        borderRadius: 10,
+        paddingBottom: 20,
+        margin: 10,
+        marginBottom: 0,
+    },
+    row: {
+        // flexDirection: "row",
+        // flex: 1,
+        // height: 60,
+        backgroundColor:'#f1f9f9',
+        padding: 10,
+    },
+    texts: {
 
+        fontSize: 15,
+        marginBottom: 5,
+        // marginLeft: 10,
+        // marginTop: 7
+    },
+    line: {
+        // marginTop: 8,
+        height: 1,
+        backgroundColor: '#F0F0F0'
+    },
 });
