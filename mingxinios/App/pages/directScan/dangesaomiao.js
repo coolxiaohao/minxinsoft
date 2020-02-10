@@ -4,12 +4,14 @@ import {
     Text,
     View,
     // Alert,
-    // RefreshControl,
+    RefreshControl,
     Image,
     Dimensions,
     TextInput,
-    // ToastAndroid,
+    KeyboardAvoidingView,
+    Button,
     // Modal,
+    Keyboard,
     TouchableOpacity,
     ScrollView,
     AsyncStorage,
@@ -23,15 +25,17 @@ import utils from '../../utils/utils'
 import loadingImage from '../../img/loading.gif'
 
 var urls = '';
-var data = [];
-var tableData: [];
+// let data = [];
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 const {width, height} = Dimensions.get('window');
 import Toast from '../../Components/Toast'
 import Modals from 'react-native-modal'
 
 export default class mingxin extends Component {
-    static defaultProps = {}
+    static defaultProps = {
+        data: [],
+        scrollY: height,
+    }
     static navigationOptions = {
         headerBackTitle: null,
         headerStyle: {
@@ -42,54 +46,47 @@ export default class mingxin extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            scrollY: this.props.scrollY,
+            data: this.props.data,
             loaded: false,
-            dataSource: ds.cloneWithRows(data),
+            dataSource: ds.cloneWithRows(this.props.data),
             ReceiveCode: '',
             tiaoma: '',
             showtiaoma: true,
             notelang: [],
             lang: '',
+            //网络获取的数据是否为空
+            ifDataEmpty: true,
+            pageNum: 1,
         };
-        // this.onLoad()
+        this.onLoad()
+        // console.error(Dimensions.get('window'))
     }
-
-    //渲染
-    // renderRow(item) {
-    //     return <View style={styles.row}>
-    //         <TouchableOpacity onPress={() => {//点击一行显示姓名，要用到TouchableOpacity组件
-    //             // this.toast.show('你单击了：' + item.fullName, DURATION.LENGTH_LONG)
-    //         }}>
-    //             <Text style={styles.text1}>姓名：{item.fullName}</Text>
-    //             <Text style={styles.text2}>邮箱：{item.email}</Text>
-    //             <Text style={styles.text3}>time：{item.time}</Text>
-    //         </TouchableOpacity>
-    //     </View>
-    // }
-
-    renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
-        return <View key={rowID} style={styles.line}></View>
-    }
-
-    // renderFooter() {
-    //     // return <Image style={{width:400,height:100}} source={{uri:'http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png'}}></Image>
-    //     return <View style={{justifyContent: "center", height: 20, alignItems: 'center'}}>
-    //         <Text style={styles.tip}>我是有底线的</Text>
-    //     </View>
-    // }
-
-    // 刷新的状态，时间2s
-    // onLoad() {
-    //     setTimeout(() => {
-    //         this.setState({
-    //             isLoading: false
-    //         })
-    //     }, 2000)
-    // }
 
     getName(val) {
         if (val.id == 1013) {
             this.setState({
                 tiaoxingma: val.name
+            })
+        }
+        if (val.id == 1014) {
+            this.setState({
+                titleName: val.name
+            })
+        }
+        if (val.id == 1015) {
+            this.setState({
+                message1015: val.name
+            })
+        }
+        if (val.id == 1016) {
+            this.setState({
+                message1016: val.name
+            })
+        }
+        if (val.id == 1017) {
+            this.setState({
+                message1017: val.name
             })
         }
         if (val.id == 119) {
@@ -121,9 +118,6 @@ export default class mingxin extends Component {
                 this.setState({
                     names: JSON.parse(result)
                 })
-                // console.error(result)
-                //console.error(this.state.names.user_token)
-                //this.state.names = JSON.parse(result)
             }
         })
         AsyncStorage.getItem('langArr', (error, result) => {
@@ -132,11 +126,11 @@ export default class mingxin extends Component {
             if (result != null) {
                 var newArr = []
                 res.map((val) => {
-                    if (val.code == 'cn'){
+                    if (val.code == 'cn') {
                         this.setState({
                             lang: 'cn'
                         })
-                    }else {
+                    } else {
                         this.setState({
                             lang: 'en'
                         })
@@ -144,11 +138,7 @@ export default class mingxin extends Component {
                     if (val.pid == 46) {
                         return newArr.push(val)
                     }
-                    if (val.id == 1012) {
-                        this.setState({
-                            titleName: val.name
-                        })
-                    }
+
                 })
                 // alert(JSON.stringify(newArr))
                 newArr.forEach((val, index) => {
@@ -158,20 +148,19 @@ export default class mingxin extends Component {
                 console.log(error)
             }
         })
-        // AsyncStorage.getItem('lang',(error,result)=>{
-        //     //console.log(JSON.parse(result))
-        //     var res = JSON.parse(result);
-        //     console.error(res)
-        //     if(result != null){
-        //         this.setState({
-        //             ishuoquK: res[0].ishuoquK,
-        //         })
-        //     }else{
-        //         this.setState({
-        //             ishuoquK: false
-        //         })
-        //     }
-        // })
+        AsyncStorage.getItem('systemDefault', (error, result) => {
+            //console.log(JSON.parse(result))
+            var res = JSON.parse(result);
+            if (result != null) {
+                this.setState({
+                    choseAll: res[0].choseAll,
+                })
+            } else {
+                this.setState({
+                    choseAll: true,
+                })
+            }
+        })
     }
 
     componentDidMount() {
@@ -186,7 +175,7 @@ export default class mingxin extends Component {
             }
         })
         this.setState({
-            dataSource: ds.cloneWithRows(data),
+            dataSource: ds.cloneWithRows(this.state.data),
             tiaoma: '',
             // dataString:'',data
         })
@@ -209,59 +198,87 @@ export default class mingxin extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView style={{paddingVertical: 0, width: '100%'}}>
-                    <View style={styles.chaxun}>
-                        <Text style={styles.nameStyles}>
-                            {this.state.titleName}
-                        </Text>
-                        <View style={styles.formStyles}>
-                            <Text style={styles.textStyles}>{this.state.tiaoxingma}:</Text>
-                            <TextInput
-                                style={styles.inputStyles}
-                                underlineColorAndroid="transparent"
-                                editable={this.state.showtiaoma}
-                                onChangeText={(e) => this.setState({tiaoma: e})}
-                                value={this.state.tiaoma}
-                                onEndEditing={(event) => (
-                                    this.getData(event.nativeEvent.text)
-                                )}
-                            />
-                            <TouchableOpacity style={styles.scanStyles}
-                                              onPress={() => this.props.navigation.navigate('Saoma', {
-                                                  callBack: (e) => {
-                                                      this.getData(e)
-                                                  }
-                                              })}>
-                                <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
-                                <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
-                            </TouchableOpacity>
+                <KeyboardAvoidingView>
+                    <ScrollView style={{paddingVertical: 0, width: '100%',marginBottom:80}} onScroll={(event => {
+                        {
+                            this.setState({scrollY: event.nativeEvent.contentOffset.y})
+                        }
+                    })}>
+                        <View style={styles.chaxun}>
+                            <Text style={styles.nameStyles}>
+                                {this.state.titleName}
+                            </Text>
+                            <View style={styles.formStyles}>
+                                <Text style={styles.textStyles}>{this.state.tiaoxingma}:</Text>
+                                <TextInput
+                                    style={styles.inputStyles}
+                                    underlineColorAndroid="transparent"
+                                    editable={this.state.showtiaoma}
+                                    onChangeText={(e) => this.setState({tiaoma: e})}
+                                    value={this.state.tiaoma}
+                                    onEndEditing={(event) => (
+                                        this.getData(event.nativeEvent.text)
+                                    )}
+                                />
+                                <TouchableOpacity style={styles.scanStyles}
+                                                  onPress={() => this.props.navigation.navigate('Saoma', {
+                                                      callBack: (e) => {
+                                                          this.getData(e)
+                                                      }
+                                                  })}>
+                                    <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
+                                    <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.tablecontent}>
-                        <ListView
-                            enableEmptySections={true}
-                            dataSource={this.state.dataSource}//关联state中的datasource
-                            renderRow={(item) => this.renderRow(item)}//制定listView的显示效果
-                            //行与行之间的分割线，用renderSeparator实现
-                            renderSeparator={(sectionID, rowID, adjacentRowHighlighted) =>
-                                this.renderSeparator(sectionID, rowID, adjacentRowHighlighted)
-                            }
-                            //页脚，底部的图片和文字，提示性，图片和文字都可以
-                            // renderFooter={() => this.renderFooter()}
-                            // 下拉刷新，要用到RefreshControl，需要导入
-                            // refreshControl={
-                            //     <RefreshControl refreshing={this.state.isLoading} onRefresh={() => this.onLoad()}/>
-                            // }
-                        />
-                        <Toast
-                            ref={toast => {
-                                this.toast = toast
-                            }}
-                        />
-                    </View>
+                        <View style={styles.tablecontent}>
+                            <ListView
+                                enableEmptySections={true}
+                                dataSource={this.state.dataSource}//关联state中的datasource
+                                renderRow={(item) => this.renderRow(item)}//制定listView的显示效果
+                                //行与行之间的分割线，用renderSeparator实现
+                                renderSeparator={(sectionID, rowID, adjacentRowHighlighted) =>
+                                    this.renderSeparator(sectionID, rowID, adjacentRowHighlighted)
+                                }
+                                //页脚，底部的图片和文字，提示性，图片和文字都可以
+                                // renderFooter={() => this.renderFooter()}
+                                // 下拉刷新，要用到RefreshControl，需要导入
+                                refreshControl={
+                                    <RefreshControl refreshing={this.state.loaded} onRefresh={() => this.onLoad()}/>
+                                }
+                                // onEndReached={this.onEndReached.bind(this)}
+                                // onEndReachedThreshold={100}
+                            />
+                            <Toast
+                                ref={toast => {
+                                    this.toast = toast
+                                }}
+                            />
 
-                </ScrollView>
+                        </View>
 
+                    </ScrollView>
+                </KeyboardAvoidingView>
+                <View style={{
+                    justifyContent:'center',
+                    alignItems:'center',
+                    flex:1,
+                    flexDirection: 'row',
+                    position: 'absolute',
+                    bottom:  0 - this.state.scrollY + this.state.scrollY,
+                    left:0,
+                    width: width,
+                    height: 80,
+                    backgroundColor:'#e5f7ff',
+                    borderTopLeftRadius: 10,
+                    borderTopRightRadius: 10,
+                    borderBottomRightRadius: 0,
+                    borderBottomLeftRadius: 0,}}>
+                    {/*<Text style={{ flex:1,}}>总行数:</Text>*/}
+                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title='上一页'/>
+                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title='下一页'/>
+                    {/*<Text style={{ flex:1,}}>当前页数:</Text>*/}
+                </View>
 
                 <Modals
                     isVisible={this.state.loaded}
@@ -296,28 +313,31 @@ export default class mingxin extends Component {
         );
     }
 
-    // render() {
-    //     const state = this.state;
-    //     return (
-    //
-    //     )
-    // }
-    getData(e) {
-        _that = this;
-        if (e == '') {
-            return
+    //上一页
+    fenye(type){
+        let page =  this.state.pageNum;
+        if (type == 0){
+            page = page - 1;
+        }else {
+            page = page + 1;
         }
-        // alert(e)
+        // alert(page > 0 && this.state.tiaoma != '')
+        if (page > 0 && this.state.tiaoma != ''){
+            this.getDateRenter(page)
+        }else if(this.state.tiaoma == ''){
+            this.refs.toast.show(this.state.message1017, 3000);
+        }else {
+            this.refs.toast.show(this.state.message1016, 3000);
+        }
+    }
+
+    getDateRenter(page){
+        _that = this;
         this.setState({
             loaded: true,
-            ReceiveCode: e
         })
-        // var timestamp = Date.parse(new Date()) / 1000;
-        // this.setState({
-        //     loaded: false,
-        //     ReceiveCode: e
-        // })
-        const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
+        const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + this.state.tiaoma + "&page=" + page;
+        // const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
         // alert(url)
         return Promise.race([
             fetch(url),
@@ -337,71 +357,173 @@ export default class mingxin extends Component {
             .then((json) => {
                 // console.error()json)
                 if (json.state === 'success') {
-                    data = json.data;
-
+                    // data = json.data.data;
+                    let notelang = json.data.en_or_cn;
                     this.setState({
+                        pageNum: page,
                         //ReceiveCode:'',
-                        tiaoma: e,
-                        dataSource: ds.cloneWithRows(data),
+                        data: json.data.data,
+                        ifDataEmpty: false,
+                        tiaoma: this.state.tiaoma,
+                        dataSource: ds.cloneWithRows(json.data.data),
                         loaded: false,
-                        notelang: data.en_or_cn
-                        // dataString: text
-                        // dayCounts: json.data[0].zhongfeishu,
-                        // monthsCounts: json.data[0].shijishuliang
+                        notelang: notelang
                     });
                 } else if (json.state == 'error') {
+                    let data = [];
                     this.setState({
+                        data: data,
                         loaded: false,
-                        // dayCounts: '',
-                        // monthsCounts: ''
+                        ifDataEmpty: true,
+                        dataSource: ds.cloneWithRows(data),
+                        notelang: null,
                     })
                     if (json.msgcode == '004') {
                         this.refs.toast.show(this.state.message129, 3000);
-                        //alert(this.state.message129)
                     } else {
                         this.refs.toast.show(json.message, 3000);
-                        //alert(json.message)
                     }
                 }
 
             })
             .catch((error) => {
-
-                // console.error(error)
                 this.setState({
-                    loaded: false
+                    loaded: false,
+                    ifDataEmpty: false,
                 })
                 this.refs.toast.show(this.state.message130, 3000);
-                //alert(this.state.message130)
             });
     }
 
+    // xiayiye(){
+    //
+    // }
+
+    // renderFooter() {
+    //     // return <Image style={{width:400,height:100}} source={{uri:'http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png'}}></Image>
+    //     return <View style={{justifyContent: "center", height: 20, alignItems: 'center'}}>
+    //         <Text style={styles.tip}>{this.state.message1015}</Text>
+    //     </View>
+    // }
+
+    onLoad() {
+        setTimeout(() => {
+            this.setState({
+                loaded: false
+            })
+        }, 1000)
+    }
+
+    renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
+        return <View key={rowID} style={styles.line}></View>
+    }
+
+
+    getData(e) {
+        _that = this;
+        if (e == '') {
+            return
+        }
+        // alert(e)
+        this.setState({
+            loaded: true,
+            ReceiveCode: e
+        })
+        const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e + "&page=" + this.state.pageNum;
+        // const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
+        // alert(url)
+        return Promise.race([
+            fetch(url),
+            new Promise(function (resolve, reject) {
+                setTimeout(() => reject(new Error('Network request timeout!')), 10000)
+            })])
+            .then((response) => {
+                if (response.ok) {
+                    //alert(e);
+                    return response.json();
+                } else {
+                    this.setState({
+                        loaded: false
+                    })
+                }
+            })
+            .then((json) => {
+                // console.error()json)
+                if (json.state === 'success') {
+                    // data = json.data.data;
+                    let notelang = json.data.en_or_cn;
+                    this.setState({
+                        //ReceiveCode:'',
+                        data: json.data.data,
+                        ifDataEmpty: false,
+                        tiaoma: e,
+                        dataSource: ds.cloneWithRows(json.data.data),
+                        loaded: false,
+                        notelang: notelang
+                    });
+                } else if (json.state == 'error') {
+                    let data = [];
+                    this.setState({
+                        data: data,
+                        loaded: false,
+                        ifDataEmpty: true,
+                        dataSource: ds.cloneWithRows(data),
+                        notelang: null,
+                    })
+                    if (json.msgcode == '004') {
+                        this.refs.toast.show(this.state.message129, 3000);
+                    } else {
+                        this.refs.toast.show(json.message, 3000);
+                    }
+                }
+
+            })
+            .catch((error) => {
+                this.setState({
+                    loaded: false,
+                    ifDataEmpty: false,
+                })
+                this.refs.toast.show(this.state.message130, 3000);
+            });
+    }
+
+    // renderEmpty(){
+    //     return <View style={{justifyContent: 'center' , height: 80,alignItems: 'center'}}>
+    //         <Text>暂时没有数据哦～～</Text>
+    //     </View>
+    // }
     //
     renderRow(item) {
         let list = [];
-        // let arrdata = [];
-        // console.error(item.r49b001)
-
-        // console.error(arrdata)
-        this.state.notelang.map((val,index) => {
-            let ziduan = '';
-            // alert(val.ziduan)
-            for (let i in item){
-                ziduan=item[val.ziduan];
-                // ziduan = item[val.ziduan];
-                // console.error(item['r49b001'])
-                // arrdata.push(item);
-            }
-            if (this.state.lang == 'cn'){
-                list.push(<Text style={styles.texts}>{val.zhongwen}: {ziduan}</Text>);
-            }else {
-                list.push(<Text style={styles.texts}>{val.yinwen}: {ziduan}</Text>);
-            }
-
-        });
+        let num = 1;
+        let textall;
+        // console.error(this.state.notelang!= "undefined" && this.state.notelang !=null)
+        if (this.state.notelang != "undefined" && this.state.notelang != null) {
+            this.state.notelang.map((val, index) => {
+                let ziduan = '';
+                for (let i in item) {
+                    ziduan = item[val.ziduan];
+                }
+                let text = '';
+                if (this.state.lang == 'cn') {
+                    text = <Text style={styles.texts} key={index}>{val.zhongwen}: {ziduan}</Text>;
+                } else {
+                    text = <Text style={styles.texts} key={index}>{val.yinwen}: {ziduan}</Text>;
+                    // list.push(<Text style={styles.texts} key={index}>{val.yinwen}: {ziduan}</Text>);
+                }
+                if (num % 2 == 0) {
+                    list.push(<View key={index} style={styles.touch}>{textall}{text}</View>);
+                    textall = null;
+                } else {
+                    textall = text;
+                }
+                num++;
+            });
+        } else {
+            // console.error(this.state.notelang!= "undefined" && this.state.notelang !=null)
+        }
         return <View style={styles.row}>
             <TouchableOpacity onPress={() => {//点击一行显示姓名，要用到TouchableOpacity组件
-                // this.toast.show('你单击了：' + item.fullName, DURATION.LENGTH_LONG)
             }}>
                 {list}
             </TouchableOpacity>
@@ -411,11 +533,21 @@ export default class mingxin extends Component {
 }
 
 const styles = StyleSheet.create({
+
+    Footerbuttons:{
+        flex: 1,
+        fontSize: 15,
+        marginBottom: 5,
+    },
+    touch: {
+        flex: 1,
+        flexDirection: 'row'
+    },
     tablecontent: {
         // height:200,
-        borderRadius: 10,
+        borderRadius: 20,
         backgroundColor: '#ffffff',
-        margin: 5,
+        margin: 10,
         marginTop: 15,
         paddingBottom: 5,
     },
@@ -445,7 +577,8 @@ const styles = StyleSheet.create({
         width: width - 40,
         marginTop: 10,
         marginLeft: 10,
-        paddingTop: 30,
+        marginRight: 10,
+        paddingTop: 15,
         paddingBottom: 10,
         borderRadius: 10,
         // marginBottom: 10,
@@ -474,9 +607,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f7f9',
         position: 'relative',
     },
-    tablecontainer: {flex: 1, padding: 16, paddingTop: 20},
-    head: {height: 40, backgroundColor: '#21b9fc'},
-    text: {margin: 6},
+    tablecontainer: {
+        flex: 1,
+        padding: 16,
+        paddingTop: 20
+    },
+    head: {
+        height: 40,
+        backgroundColor: '#21b9fc'
+    },
+    text: {
+        margin: 6
+    },
     nameStyles: {
         backgroundColor: '#ffffff',
         fontSize: 26,
@@ -502,11 +644,12 @@ const styles = StyleSheet.create({
         // flexDirection: "row",
         // flex: 1,
         // height: 60,
-        backgroundColor:'#f1f9f9',
+        backgroundColor: '#ffffff',
         padding: 10,
     },
     texts: {
-
+        flex: 1,
+        // width:50,
         fontSize: 15,
         marginBottom: 5,
         // marginLeft: 10,

@@ -13,6 +13,7 @@
 		"react-native-camera": "^1.1.4",
 		"react-native-cli": "^2.0.1",
 		"react-native-device-info": "^0.24.3",
+		"react-native-gp-style": "^1.0.1",
 		"react-native-image-picker": "^0.26.10",
 		"react-native-log-ios": "^1.0.1",
 		"react-native-modal": "^6.5.0",
