@@ -537,9 +537,7 @@ export default class mingxin extends Component {
                         textall = text;
                         //最后一个
                         if (num == this.state.notelang.length){
-                            // alert(val.ziduan);
                             list.push(<View key={index} style={styles.touch}>{textall}</View>)
-                            textall = null;
                         }
                     }
                     num++;
