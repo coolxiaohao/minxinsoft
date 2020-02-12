@@ -257,7 +257,6 @@ export default class mingxin extends Component {
                                     this.toast = toast
                                 }}
                             />
-
                         </View>
 
                     </ScrollView>
@@ -317,7 +316,7 @@ export default class mingxin extends Component {
         );
     }
 
-    //上一页
+    //分页
     fenye(type) {
         let page = this.state.pageNum;
         let isXia=true;
