@@ -132,7 +132,7 @@ export default class mingxin extends Component {
       })
     }
     //是否允许超单据数
-    if(val.id==1009){
+    if(val.id==312){
       this.setState({
         messageCDJS: val.name
       })
