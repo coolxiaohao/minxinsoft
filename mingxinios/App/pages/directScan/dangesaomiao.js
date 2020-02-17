@@ -288,8 +288,8 @@ export default class mingxin extends Component {
                     borderBottomLeftRadius: 0,
                 }}>
                     {/*<Text style={{ flex:1,}}>总行数:</Text>*/}
-                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title={this.state.message316}/>
-                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title={this.state.message317}/>
+                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title={`${this.state.message316}`}/>
+                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title={`${this.state.message317}`}/>
                     {/*<Text style={{ flex:1,}}>当前页数:</Text>*/}
                 </View>
 
