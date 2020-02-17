@@ -123,12 +123,12 @@ export default class mingxin extends Component {
                 message130: val.name
             })
         }
-        if (val.id == 1100){
+        if (val.id == 313){
             this.setState({
                 stimeName:val.name
             })
         }
-        if (val.id == 1101){
+        if (val.id == 314){
             this.setState({
                 etimeName:val.name
             })
@@ -143,11 +143,77 @@ export default class mingxin extends Component {
                 queren:val.name
             })
         }
-        if (val.id == 1102){
+        if (val.id == 315){
             this.setState({
                 chaXunName:val.name
             })
         }
+        if (val.id == 316){
+            this.setState({
+                message316:val.name
+            })
+        }
+        if (val.id == 317){
+            this.setState({
+                message317:val.name
+            })
+        }
+        if (val.id == 318){
+            this.setState({
+                message318:val.name
+            })
+        }
+        if (val.id == 319){
+            this.setState({
+                message319:val.name
+            })
+        }
+        if (val.id == 320){
+            this.setState({
+                message320:val.name
+            })
+        }
+        if (val.id == 321){
+            this.setState({
+                message321:val.name
+            })
+        }
+        if (val.id == 322){
+            this.setState({
+                message322:val.name
+            })
+        }
+        if (val.id == 323){
+            this.setState({
+                message323:val.name
+            })
+        }
+        if (val.id == 324){
+            this.setState({
+                message324:val.name
+            })
+        }
+        if (val.id == 325){
+            this.setState({
+                message325:val.name
+            })
+        }
+        if (val.id == 326){
+            this.setState({
+                message326:val.name
+            })
+        }
+        if (val.id == 327){
+            this.setState({
+                message327:val.name
+            })
+        }
+        if (val.id == 328){
+            this.setState({
+                message328:val.name
+            })
+        }
+
     }
 
     read() {
@@ -263,108 +329,124 @@ export default class mingxin extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView style={{paddingVertical: 0,backgroundColor: '#ffffff',
+                <ScrollView style={{
+                    // margin:,
+                    width: '100%',
+                    paddingVertical: 0,
+                    backgroundColor: '#f5f7f9',
+                    // backgroundColor: '#ffffff',
                     borderRadius: 10,
                     paddingBottom: 20,
-                    margin: 10,
-                    marginBottom: 0,}}>
-                    <Text style={styles.nameStyles}>
-                        {this.state.titleName}
-                    </Text>
-                    <View style={styles.contentForm}>
-                        <View style={styles.formStyles}>
-                            <Text style={styles.textStyles}>{this.state.saoGongHName}:</Text>
-                            <TextInput
-                                style={styles.inputStyles}
-                                underlineColorAndroid="transparent"
-                                editable={this.state.showgonghao}
-                                onChangeText={(e) => this.setState({ReceiveCode: e})}
-                                value={this.state.saveYuan ? this.state.names.userno : this.state.ReceiveGongHao}
-                                onEndEditing={(event) => (
-                                    this.getData(event.nativeEvent.text)
-                                )}
-                            />
-                            {
-                                this.state.saveYuan ?
-                                    <Text style={{width: 32, height: 36}}></Text> :
-                                    <TouchableOpacity style={styles.scanStyles}
-                                                      onPress={() => this.props.navigation.navigate('Saoma', {
-                                                          callBack: (e) => {
-                                                              this.getData(e)
-                                                          }
-                                                      })}>
-                                        <Image style={{width: 20, height: 20}} source={{uri: 'saomab'}}/>
-                                        <Text style={{fontSize: 8, color: '#000000'}}>{this.state.saoyiSName}</Text>
-                                    </TouchableOpacity>
-                            }
-                        </View>
-                        <View style={styles.formStyles}>
-                            <Text style={styles.textStyles}>{this.state.stimeName}:</Text>
-                            <Text
-                                style={styles.inputStyle}
-                                onPress={() => {
-                                    this.setState({
-                                        getes: 1,
-                                    })
-                                    // alert(Platform)
-                                    // console.error(Platform.OS)
-                                    if (Platform.OS == 'android') {
-                                        this.datePick()
-                                    } else {
-                                        this.setState({
-                                            isShowDate: true,
-                                        })
-                                    }
-
-                                    // this.setState({isShowDate:true})
-                                    // alert(this.state.isShowDate)
-                                }}
-                            >{this.state.stime}</Text>
-                            {/*<DatePickerIOS/>*/}
-                            <View style={styles.scanStyles}>
-
+                    // marginTop: 10,
+                    // marginLeft: 10,
+                    // marginRight: 10,
+                    marginBottom: 80,}}>
+                    <View style={{
+                        backgroundColor: '#ffffff',
+                        borderRadius: 10,
+                        paddingBottom: 20,
+                        margin: 10,
+                        marginBottom: 0,
+                    }}>
+                        <Text style={styles.nameStyles}>
+                            {this.state.titleName}
+                        </Text>
+                        <View style={styles.contentForm}>
+                            <View style={styles.formStyles}>
+                                <Text style={styles.textStyles}>{this.state.saoGongHName}:</Text>
+                                <TextInput
+                                    style={styles.inputStyles}
+                                    underlineColorAndroid="transparent"
+                                    editable={this.state.showgonghao}
+                                    onChangeText={(e) => this.setState({ReceiveCode: e})}
+                                    value={this.state.saveYuan ? this.state.names.userno : this.state.ReceiveGongHao}
+                                    onEndEditing={(event) => (
+                                        this.getData(event.nativeEvent.text)
+                                    )}
+                                />
+                                {
+                                    this.state.saveYuan ?
+                                        <Text style={{width: 32, height: 36}}></Text> :
+                                        <TouchableOpacity style={styles.scanStyles}
+                                                          onPress={() => this.props.navigation.navigate('Saoma', {
+                                                              callBack: (e) => {
+                                                                  this.getData(e)
+                                                              }
+                                                          })}>
+                                            <Image style={{width: 20, height: 20}} source={{uri: 'saomab'}}/>
+                                            <Text style={{fontSize: 8, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                        </TouchableOpacity>
+                                }
                             </View>
-                        </View>
-                        <View style={styles.formStyles}>
-                            <Text style={styles.textStyles}>{this.state.etimeName}:</Text>
-                            <Text
-                                style={styles.inputStyle}
-                                onPress={() => {
-                                    this.setState({
-                                        getes: 2,
-                                    })
-                                    // alert(Platform)
-                                    // console.error(Platform.OS)
-                                    if (Platform.OS == 'android') {
-                                        this.datePick()
-                                    } else {
+                            <View style={styles.formStyles}>
+                                <Text style={styles.textStyles}>{this.state.stimeName}:</Text>
+                                <Text
+                                    style={styles.inputStyle}
+                                    onPress={() => {
                                         this.setState({
-                                            isShowDate: true,
+                                            getes: 1,
                                         })
-                                    }
-                                }}
-                            >{this.state.etime}</Text>
-                            {/*<DatePickerIOS/>*/}
-                            <View style={styles.scanStyles}>
+                                        // alert(Platform)
+                                        // console.error(Platform.OS)
+                                        if (Platform.OS == 'android') {
+                                            this.datePick()
+                                        } else {
+                                            this.setState({
+                                                isShowDate: true,
+                                            })
+                                        }
 
+                                        // this.setState({isShowDate:true})
+                                        // alert(this.state.isShowDate)
+                                    }}
+                                >{this.state.stime}</Text>
+                                {/*<DatePickerIOS/>*/}
+                                <View style={styles.scanStyles}>
+
+                                </View>
                             </View>
-                        </View>
-                        <View style={{
-                            justifyContent:'center',
-                            alignItems:'center',
-                            width: width - 40,
-                            marginTop: 10,
-                            marginBottom: 10,}}>
-                            {/*<Text style={{borderRadius: 5,borderWidth: 1,minWidth:'100%',minHeight:40,paddingRight: 10,paddingLeft:10,}}>{'查询'}</Text>*/}
-                            <CustomButton onPress={()=>{
-                                this.submitChaxun()
-                            }}
-                                          bgColor={'#74b9ff'}
-                                          text={this.state.chaXunName}
-                                          style={{minWidth:80,minHeight:40,textAlign:'center',borderRadius:10,overflow: 'hidden',fontSize:18}}
-                                          size={30}/>
+                            <View style={styles.formStyles}>
+                                <Text style={styles.textStyles}>{this.state.etimeName}:</Text>
+                                <Text
+                                    style={styles.inputStyle}
+                                    onPress={() => {
+                                        this.setState({
+                                            getes: 2,
+                                        })
+                                        // alert(Platform)
+                                        // console.error(Platform.OS)
+                                        if (Platform.OS == 'android') {
+                                            this.datePick()
+                                        } else {
+                                            this.setState({
+                                                isShowDate: true,
+                                            })
+                                        }
+                                    }}
+                                >{this.state.etime}</Text>
+                                {/*<DatePickerIOS/>*/}
+                                <View style={styles.scanStyles}>
+
+                                </View>
+                            </View>
+                            <View style={{
+                                justifyContent:'center',
+                                alignItems:'center',
+                                width: width - 40,
+                                marginTop: 10,
+                                marginBottom: 10,}}>
+                                {/*<Text style={{borderRadius: 5,borderWidth: 1,minWidth:'100%',minHeight:40,paddingRight: 10,paddingLeft:10,}}>{'查询'}</Text>*/}
+                                <CustomButton onPress={()=>{
+                                    this.submitChaxun()
+                                }}
+                                              bgColor={'#74b9ff'}
+                                              text={this.state.chaXunName}
+                                              style={{minWidth:80,minHeight:40,textAlign:'center',borderRadius:10,overflow: 'hidden',fontSize:18}}
+                                              size={30}/>
+                            </View>
                         </View>
                     </View>
+
 
                     {/*<View style={styles.formStyles}>*/}
                     {/*    <Text style={styles.textStyles}>{this.state.monthName}:</Text>*/}
@@ -418,8 +500,8 @@ export default class mingxin extends Component {
                     borderBottomLeftRadius: 0,
                 }}>
                     {/*<Text style={{ flex:1,}}>总行数:</Text>*/}
-                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title='上一页'/>
-                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title='下一页'/>
+                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title={this.state.message316}/>
+                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title={this.state.message317}/>
                     {/*<Text style={{ flex:1,}}>当前页数:</Text>*/}
                 </View>
                 <Modal
@@ -529,61 +611,25 @@ export default class mingxin extends Component {
     }
     //渲染数据
     renderRow(item) {
-        // let list = [];
-        // let num = 1;
-        // let textall;
-        // console.error(this.state.notelang)
-
-        // if (this.state.notelang != "undefined" && this.state.notelang != null) {
-        //     this.state.notelang.map((val, index) => {
-        //         let ziduan = '';
-        //         for (let i in item) {
-        //             ziduan = item[val.ziduan];
-        //         }
-        //         let text = '';
-        //         if (ziduan != "undefined" && ziduan != null && ziduan != ''){
-        //             if (this.state.lang == 'cn') {
-        //                 text = <Text style={styles.texts} key={index}>{val.zhongwen}: {ziduan}</Text>;
-        //             } else {
-        //                 text = <Text style={styles.texts} key={index}>{val.yinwen}: {ziduan}</Text>;
-        //                 // list.push(<Text style={styles.texts} key={index}>{val.yinwen}: {ziduan}</Text>);
-        //             }
-        //             if (num % 2 == 0) {
-        //                 list.push(<View key={index} style={styles.touch}>{textall}{text}</View>);
-        //                 textall = null;
-        //             } else {
-        //                 textall = text;
-        //                 //最后一个
-        //                 if (num == this.state.notelang.length){
-        //                     // alert(val.ziduan);
-        //                     list.push(<View key={index} style={styles.touch}>{textall}</View>)
-        //                     textall = null;
-        //                 }
-        //             }
-        //             num++;
-        //         }
-        //
-        //     });
-        // }
-        // console.error(list)
+        // console.error(item)
         return <View style={styles.row}>
             <TouchableOpacity onPress={() => {//点击一行显示姓名，要用到TouchableOpacity组件
             }}>
                 {/*{list}*/}
                 <View  style={styles.touch}>
-                    <Text style={styles.texts}>{'工序号'}: {item.gongxuhao}</Text>
-                    <Text style={styles.texts}>{'工序'}: {item.gongxuname}</Text>
+                    <Text style={styles.texts}>{this.state.message321}: {item.gongxuhao}</Text>
+                    <Text style={styles.texts}>{this.state.message322}: {item.gongxuname}</Text>
                 </View>
                 <View  style={styles.touch}>
-                    <Text style={styles.texts}>{'款号'}: {item.kuanhao}</Text>
-                    <Text style={styles.texts}>{'数量'}: {iten.q}</Text>
+                    <Text style={styles.texts}>{this.state.message323}: {item.kuanhao}</Text>
+                    <Text style={styles.texts}>{this.state.message324}: {item.q}</Text>
                 </View>
                 <View  style={styles.touch}>
-                    <Text style={styles.texts}>{'批数'}: {item.zhahao}</Text>
-                    <Text style={styles.texts}>{'个数'}: {item.c}</Text>
+                    <Text style={styles.texts}>{this.state.message325}: {item.zhahao}</Text>
+                    <Text style={styles.texts}>{this.state.message326}: {item.c}</Text>
                 </View>
                 <View  style={styles.touch}>
-                    <Text style={styles.texts}>{'日期'}: {item.t}</Text>
+                    <Text style={styles.texts}>{this.state.message327}: {item.t}</Text>
                 </View>
             </TouchableOpacity>
         </View>
@@ -625,11 +671,11 @@ export default class mingxin extends Component {
         if (page > 0 && this.state.ReceiveCode != '' && isXia) {
             this.getDateRenter(page)
         } else if (this.state.ReceiveCode == '') {
-            this.refs.toast.show(this.state.message1017, 3000);
+            this.refs.toast.show(this.state.message328, 3000);
         } else if (!isXia){
-            this.refs.toast.show(this.state.message1018, 3000);
+            this.refs.toast.show(this.state.message319, 3000);
         }else {
-            this.refs.toast.show(this.state.message1016, 3000);
+            this.refs.toast.show(this.state.message318, 3000);
         }
     }
 
@@ -644,7 +690,7 @@ export default class mingxin extends Component {
             this.setState({
                 loaded: false
             })
-            this.refs.toast.show(this.state.message129, 3000);
+            this.refs.toast.show(this.state.message328, 3000);
             return ;
         }
         // var timestamp = Date.parse(new Date()) / 1000;
@@ -719,7 +765,7 @@ export default class mingxin extends Component {
             this.setState({
                 loaded: false
             })
-            this.refs.toast.show(this.state.message129, 3000);
+            this.refs.toast.show(this.state.message328, 3000);
             return ;
         }
         // var timestamp = Date.parse(new Date()) / 1000;
@@ -743,7 +789,7 @@ export default class mingxin extends Component {
             .then((json) => {
                 console.log(json)
                 if (json.state === 'success') {
-                    console.error(json)
+                    // console.error(json)
                     this.setState({
                         hangshu:json.data.count,
                         //ReceiveCode:'',
@@ -754,7 +800,7 @@ export default class mingxin extends Component {
                         loaded: false,
                         // notelang: notelang
                     });
-                    // console.error(this.state.data)
+                    // console.error(this.state.dataSource)
 
                 } else if (json.state == 'error') {
                     let data = [];
@@ -884,7 +930,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#f5f7f9',
         position: 'relative',
     },
     nameStyles: {
@@ -901,12 +947,13 @@ const styles = StyleSheet.create({
         color: '#000000'
     },
     contentForm:{
+        marginRight: 10,
+        marginLeft:10,
         marginTop: 10,
         backgroundColor: '#e5f7ff',
         borderRadius: 10,
     },
     tablecontent: {
-        // height:200,
         borderRadius: 20,
         backgroundColor: '#ffffff',
         margin: 10,

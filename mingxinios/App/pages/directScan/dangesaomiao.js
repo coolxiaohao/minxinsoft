@@ -65,34 +65,44 @@ export default class mingxin extends Component {
     }
 
     getName(val) {
-        if (val.id == 1013) {
+        if (val.id == 329) {
             this.setState({
                 tiaoxingma: val.name
             })
         }
-        if (val.id == 1014) {
+        if (val.id == 330) {
             this.setState({
                 titleName: val.name
             })
         }
-        if (val.id == 1015) {
+        // if (val.id == 1015) {
+        //     this.setState({
+        //         message1015: val.name
+        //     })
+        // }
+        if (val.id == 331) {
             this.setState({
-                message1015: val.name
+                message331: val.name
             })
         }
-        if (val.id == 1016) {
+        if (val.id == 318) {
             this.setState({
-                message1016: val.name
+                message318: val.name
             })
         }
-        if (val.id == 1017) {
+        if (val.id == 319) {
             this.setState({
-                message1017: val.name
+                message319: val.name
             })
         }
-        if (val.id == 1018) {
+        if (val.id == 316) {
             this.setState({
-                message1018: val.name
+                message316: val.name
+            })
+        }
+        if (val.id == 317) {
+            this.setState({
+                message317: val.name
             })
         }
         if (val.id == 119) {
@@ -278,8 +288,8 @@ export default class mingxin extends Component {
                     borderBottomLeftRadius: 0,
                 }}>
                     {/*<Text style={{ flex:1,}}>总行数:</Text>*/}
-                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title='上一页'/>
-                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title='下一页'/>
+                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title={this.state.message316}/>
+                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title={this.state.message317}/>
                     {/*<Text style={{ flex:1,}}>当前页数:</Text>*/}
                 </View>
 
@@ -334,11 +344,11 @@ export default class mingxin extends Component {
         if (page > 0 && this.state.tiaoma != '' && isXia) {
             this.getDateRenter(page)
         } else if (this.state.tiaoma == '') {
-            this.refs.toast.show(this.state.message1017, 3000);
+            this.refs.toast.show(this.state.message331, 3000);
         } else if (!isXia){
-            this.refs.toast.show(this.state.message1018, 3000);
+            this.refs.toast.show(this.state.message319, 3000);
         }else {
-            this.refs.toast.show(this.state.message1016, 3000);
+            this.refs.toast.show(this.state.message318, 3000);
         }
     }
 
