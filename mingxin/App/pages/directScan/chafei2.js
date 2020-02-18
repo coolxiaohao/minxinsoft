@@ -68,6 +68,7 @@ export default class mingxin extends Component {
             stime: this.props.stime,//开始时间
             etime: this.props.etime,//结束时间
             getes:0,
+            // etime: new Date(),
             monthsCounts: '',
             names: [],
             showgonghao: true,
@@ -218,7 +219,6 @@ export default class mingxin extends Component {
                 message335:val.name
             })
         }
-
     }
 
     read() {
@@ -256,7 +256,7 @@ export default class mingxin extends Component {
                     if (val.pid == 46) {
                         return newArr.push(val)
                     }
-                    if (val.id == 7) {
+                    if (val.id == 332) {
                         this.setState({
                             titleName: val.name
                         })
@@ -469,6 +469,20 @@ export default class mingxin extends Component {
                             </View>
                         </View>
                     </View>
+
+
+                    {/*<View style={styles.formStyles}>*/}
+                    {/*    <Text style={styles.textStyles}>{this.state.monthName}:</Text>*/}
+                    {/*    <TextInput*/}
+                    {/*        editable={false}*/}
+                    {/*        style={styles.inputStyles}*/}
+                    {/*        underlineColorAndroid="transparent"*/}
+                    {/*        value={this.state.monthsCounts}*/}
+                    {/*    />*/}
+                    {/*    <View style={styles.scanStyles}>*/}
+
+                    {/*    </View>*/}
+                    {/*</View>*/}
                     <View style={styles.tablecontent}>
                         <ListView
                             enableEmptySections={true}
@@ -671,6 +685,7 @@ export default class mingxin extends Component {
         } else {
             if (page*10 > this.state.hangshu){
                 isXia = false;
+
             }
             page = page + 1;
         }
@@ -702,7 +717,7 @@ export default class mingxin extends Component {
             return ;
         }
         // var timestamp = Date.parse(new Date()) / 1000;
-        const url = urls + "/index.php/api/index/chafei1?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime+"&etime="+this.state.etime +"&page="+page;
+        const url = urls + "/index.php/api/index/chafei2?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime+"&etime="+this.state.etime +"&page="+page;
         // console.error(url)
         return Promise.race([
             fetch(url),
@@ -777,7 +792,7 @@ export default class mingxin extends Component {
             return ;
         }
         // var timestamp = Date.parse(new Date()) / 1000;
-        const url = urls + "/index.php/api/index/chafei1?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime+"&etime="+this.state.etime +"&page="+this.state.pageNum;
+        const url = urls + "/index.php/api/index/chafei2?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime+"&etime="+this.state.etime +"&page="+this.state.pageNum;
         // console.error(url)
         return Promise.race([
             fetch(url),
@@ -854,12 +869,17 @@ export default class mingxin extends Component {
     closeModal() {
         let time = new Date();
         time =  time.getFullYear()+'-'+ this.joint(time.getMonth()+1)+'-'+this.joint(time.getDate())
+        // let sdate = this.state.date;
+        // let edate = this.state.date;
+        // let stime = sdate.getFullYear()+'-'+ this.joint(sdate.getMonth()+1)+'-'+this.joint(sdate.getDate())
+        // let etime = edate.getFullYear()+'-'+ this.joint(edate.getMonth()+1)+'-'+this.joint(edate.getDate())
         if (this.state.getes!=0&&this.state.getes == 1){//stime
             this.setState({isShowDate: false, stime: time})
         }else {
             this.setState({isShowDate: false, etime: time})
         }
     }
+
 
     getEId(e){
         _that = this;
@@ -1024,6 +1044,11 @@ const styles = StyleSheet.create({
         flex: 1
     },
     inputStyles: {
+        // textAlign:'center',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // fontSize:16,
+
         width: 180,
         backgroundColor: '#ffffff',
         borderRadius: 10,

@@ -3,29 +3,21 @@ import {
     StyleSheet,
     Text,
     View,
-    // Alert,
     RefreshControl,
     Image,
     Dimensions,
     TextInput,
     KeyboardAvoidingView,
     Button,
-    // Modal,
-    Keyboard,
     TouchableOpacity,
     ScrollView,
     AsyncStorage,
     BackHandler,
     ListView,
-    TouchableHighlight
 } from 'react-native';
-// import {Table, TableWrapper, Row, Rows, Col, Cols, Cell} from 'react-native-table-component';
-// import CustomList from "../../Components/CustomList";
-import utils from '../../utils/utils'
 import loadingImage from '../../img/loading.gif'
 
 var urls = '';
-// let data = [];
 var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 const {width, height} = Dimensions.get('window');
 import Toast from '../../Components/Toast'
@@ -53,7 +45,8 @@ export default class mingxin extends Component {
             loaded: false,
             dataSource: ds.cloneWithRows(this.props.data),
             ReceiveCode: '',
-            tiaoma: '',
+            tiaoma1: '',
+            tiaoma2: '',
             showtiaoma: true,
             notelang: [],
             lang: 'cn',
@@ -65,21 +58,36 @@ export default class mingxin extends Component {
     }
 
     getName(val) {
-        if (val.id == 329) {
+        // if (val.id == 329) {
+        //     this.setState({
+        //         tiaoxingma: val.name
+        //     })
+        // }
+        if (val.id == 337) {
             this.setState({
-                tiaoxingma: val.name
+                message337: val.name
             })
         }
-        if (val.id == 330) {
+        if (val.id == 338) {
+            this.setState({
+                message338: val.name
+            })
+        }
+        if (val.id == 339) {
+            this.setState({
+                message339: val.name
+            })
+        }
+        // if (val.id == 329) {
+        //     this.setState({
+        //         tiaoxingma: val.name
+        //     })
+        // }
+        if (val.id == 336) {
             this.setState({
                 titleName: val.name
             })
         }
-        // if (val.id == 1015) {
-        //     this.setState({
-        //         message1015: val.name
-        //     })
-        // }
         if (val.id == 331) {
             this.setState({
                 message331: val.name
@@ -151,7 +159,15 @@ export default class mingxin extends Component {
             if (result != null) {
                 var newArr = []
                 res.map((val) => {
-
+                    // if (val.code == 'cn') {
+                    //     this.setState({
+                    //         lang: 'cn'
+                    //     })
+                    // } else {
+                    //     this.setState({
+                    //         lang: 'en'
+                    //     })
+                    // }
                     if (val.pid == 46) {
                         return newArr.push(val)
                     }
@@ -224,27 +240,51 @@ export default class mingxin extends Component {
                             <Text style={styles.nameStyles}>
                                 {this.state.titleName}
                             </Text>
-                            <View style={styles.formStyles}>
-                                <Text style={styles.textStyles}>{this.state.tiaoxingma}:</Text>
-                                <TextInput
-                                    style={styles.inputStyles}
-                                    underlineColorAndroid="transparent"
-                                    editable={this.state.showtiaoma}
-                                    onChangeText={(e) => this.setState({tiaoma: e})}
-                                    value={this.state.tiaoma}
-                                    onEndEditing={(event) => (
-                                        this.getData(event.nativeEvent.text)
-                                    )}
-                                />
-                                <TouchableOpacity style={styles.scanStyles}
-                                                  onPress={() => this.props.navigation.navigate('Saoma', {
-                                                      callBack: (e) => {
-                                                          this.getData(e)
-                                                      }
-                                                  })}>
-                                    <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
-                                    <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
-                                </TouchableOpacity>
+                            <View style={styles.formContent}>
+                                <View style={styles.formStyles}>
+                                    <Text style={styles.textStyles}>{this.state.message337}:</Text>
+                                    <TextInput
+                                        style={styles.inputStyles}
+                                        underlineColorAndroid="transparent"
+                                        editable={this.state.showtiaoma}
+                                        onChangeText={(e) => this.setState({tiaoma1: e})}
+                                        value={this.state.tiaoma1}
+                                        onEndEditing={(event) => (
+                                            this.getTiaoMa(event.nativeEvent.text, 1)
+                                        )}
+                                    />
+                                    <TouchableOpacity style={styles.scanStyles}
+                                                      onPress={() => this.props.navigation.navigate('Saoma', {
+                                                          callBack: (e) => {
+                                                              this.getTiaoMa(e, 1)
+                                                          }
+                                                      })}>
+                                        <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
+                                        <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.formStyles}>
+                                    <Text style={styles.textStyles}>{this.state.message338}:</Text>
+                                    <TextInput
+                                        style={styles.inputStyles}
+                                        underlineColorAndroid="transparent"
+                                        editable={this.state.showtiaoma}
+                                        onChangeText={(e) => this.setState({tiaoma2: e})}
+                                        value={this.state.tiaoma2}
+                                        onEndEditing={(event) => (
+                                            this.getTiaoMa(event.nativeEvent.text, 2)
+                                        )}
+                                    />
+                                    <TouchableOpacity style={styles.scanStyles}
+                                                      onPress={() => this.props.navigation.navigate('Saoma', {
+                                                          callBack: (e) => {
+                                                              this.getTiaoMa(e, 2)
+                                                          }
+                                                      })}>
+                                        <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
+                                        <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                         <View style={styles.tablecontent}>
@@ -289,8 +329,10 @@ export default class mingxin extends Component {
                     borderBottomLeftRadius: 0,
                 }}>
                     {/*<Text style={{ flex:1,}}>总行数:</Text>*/}
-                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title={`${this.state.message316}`}/>
-                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title={`${this.state.message317}`}/>
+                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons}
+                            title={`${this.state.message316}`}/>
+                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons}
+                            title={`${this.state.message317}`}/>
                     {/*<Text style={{ flex:1,}}>当前页数:</Text>*/}
                 </View>
 
@@ -330,11 +372,11 @@ export default class mingxin extends Component {
     //分页
     fenye(type) {
         let page = this.state.pageNum;
-        let isXia=true;
+        let isXia = true;
         if (type == 0) {
             page = page - 1;
         } else {
-            if (page*15 > this.state.hangshu){
+            if (page * 15 > this.state.hangshu) {
                 isXia = false;
 
             }
@@ -342,13 +384,15 @@ export default class mingxin extends Component {
         }
         // alert(page > 0 && this.state.tiaoma != '')
 
-        if (page > 0 && this.state.tiaoma != '' && isXia) {
+        if (page > 0 && this.state.tiaoma1 != '' && this.state.tiaoma2 != ''&& isXia) {
             this.getDateRenter(page)
-        } else if (this.state.tiaoma == '') {
-            this.refs.toast.show(this.state.message331, 3000);
-        } else if (!isXia){
+        } else if (this.state.tiaoma1 == '') {
+            this.refs.toast.show(this.state.tiaoma1+this.state.message339, 3000);
+        }else if ( this.state.tiaoma2 == ''){
+            this.refs.toast.show(this.state.tiaoma2+this.state.message339, 3000);
+        }else if (!isXia) {
             this.refs.toast.show(this.state.message319, 3000);
-        }else {
+        } else {
             this.refs.toast.show(this.state.message318, 3000);
         }
     }
@@ -358,9 +402,16 @@ export default class mingxin extends Component {
         this.setState({
             loaded: true,
         })
-        const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + this.state.tiaoma + "&page=" + page;
+        if (this.state.tiaoma1 == ''){
+            this.refs.toast.show(this.state.tiaoma1+this.state.message339, 3000);
+        }
+        if (this.state.tiaoma2 == ''){
+            this.refs.toast.show(this.state.tiaoma2+this.state.message339, 3000);
+        }
+        const url = urls + "/index.php/api/index/ercisaomiao?&tiaoma1=" + this.state.tiaoma1 + "&tiaoma2=" + this.state.tiaoma2 + "&page=" + page;
         // const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
         // alert(url)
+        // console.error(url)
         return Promise.race([
             fetch(url),
             new Promise(function (resolve, reject) {
@@ -382,7 +433,7 @@ export default class mingxin extends Component {
                     // data = json.data.data;
                     let notelang = json.data.en_or_cn;
                     this.setState({
-                        hangshu:json.data.count,
+                        hangshu: json.data.count,
                         pageNum: page,
                         //ReceiveCode:'',
                         data: json.data.data,
@@ -419,17 +470,6 @@ export default class mingxin extends Component {
             });
     }
 
-    // xiayiye(){
-    //
-    // }
-
-    // renderFooter() {
-    //     // return <Image style={{width:400,height:100}} source={{uri:'http://img.zcool.cn/community/0142135541fe180000019ae9b8cf86.jpg@1280w_1l_2o_100sh.png'}}></Image>
-    //     return <View style={{justifyContent: "center", height: 20, alignItems: 'center'}}>
-    //         <Text style={styles.tip}>{this.state.message1015}</Text>
-    //     </View>
-    // }
-
     onLoad() {
         setTimeout(() => {
             this.setState({
@@ -442,8 +482,7 @@ export default class mingxin extends Component {
         return <View key={rowID} style={styles.line}></View>
     }
 
-
-    getData(e) {
+    getTiaoMa(e, type) {
         _that = this;
         if (e == '') {
             return
@@ -451,11 +490,10 @@ export default class mingxin extends Component {
         // alert(e)
         this.setState({
             loaded: true,
-            ReceiveCode: e
         })
-        const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e + "&page=" + this.state.pageNum;
-        // const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
-        // alert(url)
+
+        const url = urls + "/index.php/api/index/ercigettiaoma?&tiaoma=" + e + "&type=" + type;
+        // console.error(url)
         return Promise.race([
             fetch(url),
             new Promise(function (resolve, reject) {
@@ -474,29 +512,33 @@ export default class mingxin extends Component {
             .then((json) => {
                 // console.error()json)
                 if (json.state === 'success') {
-                    // data = json.data.data;
-                    // console.error(json.data.data);
-                    let notelang = json.data.en_or_cn;
-                    this.setState({
-                        hangshu:json.data.count,
-                        //ReceiveCode:'',
-                        data: json.data.data,
-                        // ifDataEmpty: false,
-                        tiaoma: e,
-                        dataSource: ds.cloneWithRows(json.data.data),
-                        loaded: false,
-                        notelang: notelang
-                    });
+                    if (type == 1) {
+                        this.setState({
+                            loaded: false,
+                            tiaoma1: e,
+                        });
+                    } else {
+                        this.setState({
+                            loaded: false,
+                            tiaoma2: e,
+                        });
+                    }
+                    if (this.state.tiaoma1 != '' && this.state.tiaoma2 != '') {
+                        this.getDateRenter(this.state.pageNum)
+                    }
+
                 } else if (json.state == 'error') {
-                    let data = [];
-                    this.setState({
-                        data: data,
-                        hangshu: 0,
-                        loaded: false,
-                        // ifDataEmpty: true,
-                        dataSource: ds.cloneWithRows(data),
-                        notelang: null,
-                    })
+                    if (type == 1) {
+                        this.setState({
+                            loaded: false,
+                            tiaoma1: '',
+                        });
+                    } else {
+                        this.setState({
+                            loaded: false,
+                            tiaoma2: '',
+                        });
+                    }
                     if (json.msgcode == '004') {
                         this.refs.toast.show(this.state.message129, 3000);
                     } else {
@@ -514,12 +556,7 @@ export default class mingxin extends Component {
             });
     }
 
-    // renderEmpty(){
-    //     return <View style={{justifyContent: 'center' , height: 80,alignItems: 'center'}}>
-    //         <Text>暂时没有数据哦～～</Text>
-    //     </View>
-    // }
-    //
+
     renderRow(item) {
         let list = [];
         let num = 1;
@@ -533,7 +570,7 @@ export default class mingxin extends Component {
                     ziduan = item[val.ziduan];
                 }
                 let text = '';
-                if (ziduan != "undefined" && ziduan != null && ziduan != ''){
+                if (ziduan != "undefined" && ziduan != null && ziduan != '') {
                     if (this.state.lang == 'cn') {
                         text = <Text style={styles.texts} key={index}>{val.zhongwen}: {ziduan}</Text>;
                     } else {
@@ -546,7 +583,7 @@ export default class mingxin extends Component {
                     } else {
                         textall = text;
                         //最后一个
-                        if (num == this.state.notelang.length){
+                        if (num == this.state.notelang.length) {
                             // alert(val.ziduan);
                             list.push(<View key={index} style={styles.touch}>{textall}</View>)
                             textall = null;
@@ -605,18 +642,28 @@ const styles = StyleSheet.create({
         height: 40,
         flex: 0.2
     },
+    formContent: {
+        // maxWidth:width - 20,
+        backgroundColor: '#e5f7ff',
+        borderRadius: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        // paddingTop: 15,
+        paddingBottom: 10,
+        marginTop: 10,
+        // marginRight:10,
+        // marginLeft: 10,
+    },
     formStyles: {
         backgroundColor: '#e5f7ff',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: width - 40,
-        marginTop: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        paddingTop: 15,
-        paddingBottom: 10,
-        borderRadius: 10,
+        marginTop: 15,
+        // paddingTop: 10,
+
+
         // marginBottom: 10,
     },
     textStyles: {
@@ -670,9 +717,12 @@ const styles = StyleSheet.create({
         color: '#000000'
     },
     chaxun: {
+        // maxWidth:width - 20,
         backgroundColor: '#ffffff',
         borderRadius: 10,
         paddingBottom: 20,
+        // paddingLeft: 10,
+        // paddingRight: 10,
         margin: 10,
         marginBottom: 0,
     },

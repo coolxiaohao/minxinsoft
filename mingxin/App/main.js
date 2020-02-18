@@ -44,7 +44,9 @@ import PandianD from './pages/directScan/pandiansaomiao';
 import KucunD from './pages/directScan/kucunchaxun';
 import JifeiD from './pages/directScan/jifeisaomiao';
 import ChafeiD from './pages/directScan/chafei';
+import Chafei2D from './pages/directScan/chafei2';
 import DangeD from './pages/directScan/dangesaomiao';
+import ErcisaomiaoD from './pages/directScan/ercisaomiao';
 //跟单扫描
 import ChukuS from './pages/singleScan/chukusaomiao';
 import RukuS from './pages/singleScan/rukusaomiao';
@@ -53,6 +55,7 @@ import KucunS from './pages/singleScan/kucunchaxun';
 import JifeiS from './pages/singleScan/jifeisaomiao';
 import ChafeiS from './pages/singleScan/chafei';
 import DangeS from './pages/singleScan/dangesaomiao';
+import ErciS from './pages/singleScan/ercisaomiao';
 import ZhuangxiangS from './pages/singleScan/zhuangxiangsaomiao';
 import XianghaoS from './pages/singleScan/xianghaochafei';
 import BadS from './pages/singleScan/badjifei';
@@ -74,7 +77,9 @@ const Navigator = StackNavigator(
       KucunD:{screen:KucunD},
       JifeiD:{screen:JifeiD},
       ChafeiD:{screen:ChafeiD},
+      Chafei2D:{screen:Chafei2D},
       DangeD:{screen:DangeD},
+      ErciD:{screen:ErcisaomiaoD},
 
       ChukuS:{screen:ChukuS},
       RukuS:{screen:RukuS},
@@ -82,6 +87,7 @@ const Navigator = StackNavigator(
       KucunS:{screen:KucunS},
       JifeiS:{screen:JifeiS},
       ChafeiS:{screen:ChafeiD},
+      Chafei2S:{screen:Chafei2D},
       DangeS:{screen:DangeD},
       ZhuangxiangS:{screen:ZhuangxiangS},
       XianghaoS:{screen:XianghaoS},

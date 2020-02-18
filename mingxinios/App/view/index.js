@@ -632,10 +632,16 @@ export default class mingxin extends Component {
                 this.props.navigation.navigate('JifeiD', {typeValue: rowData.id}) //记菲扫描 (直接)
                 break;
             case '7':
-                this.props.navigation.navigate('ChafeiD', {typeValue: rowData.id}) //查菲 (直接)
+                this.props.navigation.navigate('ChafeiD', {typeValue: rowData.id}) //查菲1 (直接)
                 break;
-            case '1012':
-                this.props.navigation.navigate('DangeD', {typeValue: rowData.id}) //单个扫描 (直接)
+            case '332':
+                this.props.navigation.navigate('Chafei2D', {typeValue: rowData.id}) //查菲2 (直接)
+                break;
+            case '333':
+                this.props.navigation.navigate('DangeD', {typeValue: rowData.id}) //单次扫描 (直接)
+                break;
+            case '334':
+                this.props.navigation.navigate('ErciD', {typeValue: rowData.id}) //二次扫描 (直接)
                 break;
             case '8':
                 this.props.navigation.navigate('Warehouse', {typeValue: rowData.id}) //收发扫描 (直接)

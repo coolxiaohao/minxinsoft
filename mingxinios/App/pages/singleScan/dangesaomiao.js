@@ -36,7 +36,7 @@ export default class mingxin extends Component {
       <View style={styles.container}>
 
         <Text style={styles.nameStyles}>
-          单个扫描
+          单次扫描
         </Text>
       </View>
     );

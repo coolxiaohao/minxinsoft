@@ -56,7 +56,7 @@ export default class mingxin extends Component {
             tiaoma: '',
             showtiaoma: true,
             notelang: [],
-            lang: '',
+            lang: 'cn',
             //网络获取的数据是否为空
             // ifDataEmpty: true,
             pageNum: 1,
@@ -122,6 +122,15 @@ export default class mingxin extends Component {
             })
         }
         if (val.id == 130) {
+            if (val.code == 'cn') {
+                this.setState({
+                    lang: 'cn'
+                })
+            } else {
+                this.setState({
+                    lang: 'en'
+                })
+            }
             this.setState({
                 message130: val.name
             })
@@ -142,15 +151,7 @@ export default class mingxin extends Component {
             if (result != null) {
                 var newArr = []
                 res.map((val) => {
-                    if (val.code == 'cn') {
-                        this.setState({
-                            lang: 'cn'
-                        })
-                    } else {
-                        this.setState({
-                            lang: 'en'
-                        })
-                    }
+
                     if (val.pid == 46) {
                         return newArr.push(val)
                     }

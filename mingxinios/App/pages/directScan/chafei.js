@@ -68,7 +68,6 @@ export default class mingxin extends Component {
             stime: this.props.stime,//开始时间
             etime: this.props.etime,//结束时间
             getes:0,
-            // etime: new Date(),
             monthsCounts: '',
             names: [],
             showgonghao: true,
@@ -77,6 +76,7 @@ export default class mingxin extends Component {
             data: this.props.data,
             dataSource: ds.cloneWithRows(this.props.data),
             pageNum: 1,
+            EuserName: '',
         };
         this.onLoad()
         this.setDate = this.setDate.bind(this)
@@ -211,6 +211,11 @@ export default class mingxin extends Component {
         if (val.id == 328){
             this.setState({
                 message328:val.name
+            })
+        }
+        if (val.id == 335){
+            this.setState({
+                message335:val.name
             })
         }
 
@@ -359,7 +364,7 @@ export default class mingxin extends Component {
                                     underlineColorAndroid="transparent"
                                     editable={this.state.showgonghao}
                                     onChangeText={(e) => this.setState({ReceiveCode: e})}
-                                    value={this.state.saveYuan ? this.state.names.userno : this.state.ReceiveGongHao}
+                                    value={this.state.saveYuan ? this.state.names.userno : this.state.ReceiveCode}
                                     onEndEditing={(event) => (
                                         this.getData(event.nativeEvent.text)
                                     )}
@@ -377,6 +382,24 @@ export default class mingxin extends Component {
                                             <Text style={{fontSize: 8, color: '#000000'}}>{this.state.saoyiSName}</Text>
                                         </TouchableOpacity>
                                 }
+                            </View>
+                            <View style={styles.formStyles}>
+                                <Text style={styles.textStyles}>{this.state.message335}:</Text>
+                                <TextInput
+                                    style={styles.inputStyles}
+                                    underlineColorAndroid="transparent"
+                                    editable={true}
+                                    onChangeText={(e) => this.setState({EuserName: e})}
+                                    value={this.state.EuserName}
+                                    onEndEditing={(event) => (
+                                        this.getEId(event.nativeEvent.text)
+                                    )}
+                                />
+                                {/*<Text style={styles.inputStyle}>{this.state.EuserName}</Text>*/}
+                                {/*<DatePickerIOS/>*/}
+                                <View style={styles.scanStyles}>
+
+                                </View>
                             </View>
                             <View style={styles.formStyles}>
                                 <Text style={styles.textStyles}>{this.state.stimeName}:</Text>
@@ -446,20 +469,6 @@ export default class mingxin extends Component {
                             </View>
                         </View>
                     </View>
-
-
-                    {/*<View style={styles.formStyles}>*/}
-                    {/*    <Text style={styles.textStyles}>{this.state.monthName}:</Text>*/}
-                    {/*    <TextInput*/}
-                    {/*        editable={false}*/}
-                    {/*        style={styles.inputStyles}*/}
-                    {/*        underlineColorAndroid="transparent"*/}
-                    {/*        value={this.state.monthsCounts}*/}
-                    {/*    />*/}
-                    {/*    <View style={styles.scanStyles}>*/}
-
-                    {/*    </View>*/}
-                    {/*</View>*/}
                     <View style={styles.tablecontent}>
                         <ListView
                             enableEmptySections={true}
@@ -662,7 +671,6 @@ export default class mingxin extends Component {
         } else {
             if (page*10 > this.state.hangshu){
                 isXia = false;
-
             }
             page = page + 1;
         }
@@ -846,10 +854,6 @@ export default class mingxin extends Component {
     closeModal() {
         let time = new Date();
         time =  time.getFullYear()+'-'+ this.joint(time.getMonth()+1)+'-'+this.joint(time.getDate())
-        // let sdate = this.state.date;
-        // let edate = this.state.date;
-        // let stime = sdate.getFullYear()+'-'+ this.joint(sdate.getMonth()+1)+'-'+this.joint(sdate.getDate())
-        // let etime = edate.getFullYear()+'-'+ this.joint(edate.getMonth()+1)+'-'+this.joint(edate.getDate())
         if (this.state.getes!=0&&this.state.getes == 1){//stime
             this.setState({isShowDate: false, stime: time})
         }else {
@@ -857,17 +861,125 @@ export default class mingxin extends Component {
         }
     }
 
+    getEId(e){
+        _that = this;
+        if (e == '') {
+            this.setState({
+                // loaded: true,
+                ReceiveCode: ''
+            })
+            return
+        };
+        this.setState({
+            loaded: true,
+            // ReceiveCode: e
+        })
+        const url = urls + "/index.php/api/index/chafeigeteid?&EName=" + e;
+        return Promise.race([
+            fetch(url),
+            new Promise(function (resolve, reject) {
+                setTimeout(() => reject(new Error('Network request timeout!')), 10000)
+            })])
+            .then((response) => {
+                if (response.ok) {
+                    //alert(e);
+                    return response.json();
+                } else {
+                    this.setState({
+                        loaded: false
+                    })
+                }
+            })
+            .then((json) => {
+                // console.error(json)
+                if (json.state === 'success') {
+                    // console.error(json)
+                    this.setState({
+                        EuserName:e,
+                        ReceiveCode: json.data,
+                        loaded: false,
+                    });
+
+                } else if (json.state == 'error') {
+                    // let data = [];
+                    this.setState({
+                        loaded: false,
+                        ReceiveCode: ''
+                    })
+                    if (json.msgcode == '004') {
+                        this.refs.toast.show(this.state.message129, 3000);
+                    } else {
+                        this.refs.toast.show(json.message, 3000);
+                        //alert(json.message)
+                    }
+                }
+
+            })
+            .catch((error) => {
+                this.setState({
+                    loaded: false
+                })
+                this.refs.toast.show(this.state.message130, 3000);
+            });
+
+    }
 
     getData(e) {
         _that = this;
         if (e == '') {
             return
-        }
-        ;
+        };
         this.setState({
-            // loaded: true,
-            ReceiveCode: e
+            loaded: true,
+            // ReceiveCode: e
         })
+        const url = urls + "/index.php/api/index/chafeigetname?&EId=" + e;
+        return Promise.race([
+            fetch(url),
+            new Promise(function (resolve, reject) {
+                setTimeout(() => reject(new Error('Network request timeout!')), 10000)
+            })])
+            .then((response) => {
+                if (response.ok) {
+                    //alert(e);
+                    return response.json();
+                } else {
+                    this.setState({
+                        loaded: false
+                    })
+                }
+            })
+            .then((json) => {
+                // console.error(json)
+                if (json.state === 'success') {
+                    // console.error(json)
+                    this.setState({
+                        ReceiveCode:e,
+                        EuserName: json.data,
+                        loaded: false,
+                    });
+
+                } else if (json.state == 'error') {
+                    let data = [];
+                    this.setState({
+                        loaded: false,
+                        EuserName: '',
+                    })
+                    if (json.msgcode == '004') {
+                        this.refs.toast.show(this.state.message129, 3000);
+                    } else {
+                        this.refs.toast.show(json.message, 3000);
+                        //alert(json.message)
+                    }
+                }
+
+            })
+            .catch((error) => {
+                this.setState({
+                    loaded: false
+                })
+                this.refs.toast.show(this.state.message130, 3000);
+            });
     }
 
 }
@@ -912,11 +1024,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     inputStyles: {
-        // textAlign:'center',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // fontSize:16,
-
         width: 180,
         backgroundColor: '#ffffff',
         borderRadius: 10,
