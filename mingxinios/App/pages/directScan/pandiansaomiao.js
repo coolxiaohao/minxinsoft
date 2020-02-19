@@ -233,22 +233,22 @@ export default class mingxin extends Component {
         message163: val.name
       })
     }
-    if(val.id==1002){
+    if(val.id==342){
       this.setState({
         message1002: val.name
       })
     }
-    if(val.id==1003){
+    if(val.id==343){
       this.setState({
         message1003: val.name
       })
     }
-    if(val.id==1004){
+    if(val.id==344){
       this.setState({
         message1004: val.name
       })
     }
-    if(val.id==1005){
+    if(val.id==345){
       this.setState({
         message1005: val.name
       })

@@ -274,6 +274,7 @@ export default class mingxin extends Component {
                         <Text style={styles.titleStyles}>
                             {this.state.zhijiesaomiao}
                         </Text>
+                        {/*直接扫描*/}
                         <View style={styles.formStyles}>
                             <ListView
                                 dataSource={this.state.dataSourceZ}
@@ -286,6 +287,7 @@ export default class mingxin extends Component {
                             {this.state.gengdansaomiao}
                         </Text>
                         {/* <Text style={styles.titleStyles}>Single scanning</Text> */}
+                        {/*跟单扫描*/}
                         <View style={styles.formStyles}>
                             <ListView
                                 dataSource={this.state.dataSourceD}
@@ -298,6 +300,7 @@ export default class mingxin extends Component {
                             {this.state.othermenuname}
                         </Text>
                         {/* <Text style={styles.titleStyles}>Single scanning</Text> */}
+                        {/*//其他*/}
                         <View style={styles.formStyles}>
                             <ListView
                                 dataSource={this.state.dataSourceO}
@@ -402,6 +405,7 @@ export default class mingxin extends Component {
         );
     }
 
+    //f分享
     sharePage() {
         return (
             <View style={{
