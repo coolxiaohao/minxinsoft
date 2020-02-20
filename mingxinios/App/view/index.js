@@ -277,6 +277,7 @@ export default class mingxin extends Component {
                         {/*直接扫描*/}
                         <View style={styles.formStyles}>
                             <ListView
+                                initialListSize={this.state.zhijiemenu.length}
                                 dataSource={this.state.dataSourceZ}
                                 renderRow={this.renderRow.bind(this)}
                                 enableEmptySections={true}
@@ -290,6 +291,7 @@ export default class mingxin extends Component {
                         {/*跟单扫描*/}
                         <View style={styles.formStyles}>
                             <ListView
+                                initialListSize={this.state.gengdanmenu.length}
                                 dataSource={this.state.dataSourceD}
                                 renderRow={this.renderRow.bind(this)}
                                 enableEmptySections={true}
@@ -300,9 +302,10 @@ export default class mingxin extends Component {
                             {this.state.othermenuname}
                         </Text>
                         {/* <Text style={styles.titleStyles}>Single scanning</Text> */}
-                        {/*//其他*/}
+                        {/*//其他扫描*/}
                         <View style={styles.formStyles}>
                             <ListView
+                                initialListSize={this.state.othermenu.length}
                                 dataSource={this.state.dataSourceO}
                                 renderRow={this.renderRow.bind(this)}
                                 enableEmptySections={true}
@@ -494,7 +497,7 @@ export default class mingxin extends Component {
             </View>
         )
     }
-
+    //shezhi
     setUp() {
         let showDefault = false;
         if (this.state.names.auth == '1' || this.state.names.auth == '2') {
@@ -701,7 +704,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         width: window.width,
-        height: (window.width - 30) / 2,
+        height:(window.width - 30) / 2,
+        // border: 1,
+        // borderStyle:'solid',
+        // borderWidth:1,
+        // borderColor:'#f5f6f7',
     },
     container: {
         flex: 1,
