@@ -1,3 +1,4 @@
 <resources>
+	<string moduleConfig="true" name="CodePushDeploymentKey">yV_GFlkBodTQ4vhvf4qKV6m4wnFFdl4KYcGae</string>
     <string name="app_name">mingxinsoft</string>
 </resources>

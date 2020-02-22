@@ -3,9 +3,10 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"codepush": "react-native link react-native-code-push",
 		"start": "react-native start",
 		"ios": "react-native run-ios --device 'CoolHao'",
-		"ioss": "react-native run-ios --simulator 'iPhone 11",
+		"ioss": "react-native run-ios --simulator 'iPhone 11 Pro Max",
 		"test": "jest"
 	},
 	"dependencies": {
@@ -13,6 +14,7 @@
 		"react-native": "0.44.3",
 		"react-native-camera": "^1.1.4",
 		"react-native-cli": "^2.0.1",
+		"react-native-code-push": "^6.1.0",
 		"react-native-device-info": "^0.24.3",
 		"react-native-gp-style": "^1.0.1",
 		"react-native-image-picker": "^0.26.10",
