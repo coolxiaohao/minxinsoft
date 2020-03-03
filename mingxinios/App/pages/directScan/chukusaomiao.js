@@ -649,6 +649,7 @@ export default class mingxin extends Component {
 
     const url= urls + "/index.php/api/index/saoma?cangkudaihao="+this.props.navigation.state.params.cangkudaihao+"&tiaoxingma="+e+"&huoqu="+this.state.huoquValue+"&huoqukongbai="+this.state.ishuoqu+"&checkhuoqukucun="+this.state.ishuoquK;
     console.log(url)
+    // console.error(url)
     return Promise.race([
         fetch(url),
         new Promise(function(resolve,reject){
@@ -666,6 +667,7 @@ export default class mingxin extends Component {
       })
       .then((json) => {
         console.log(json)
+        // console.error(json.state)
         if (json.state === 'success') {
           //console.log(json.data.jiecunshuliang)
           if(!this.state.isChaoshu && json.data.jiecunshuliang == '0.00'){
@@ -701,6 +703,7 @@ export default class mingxin extends Component {
             //alert(this.state.message129)
           }else if(json.msgcode == '006'){
             alert(this.state.message1005)
+            this.refs.toast.show(this.state.message1005,3000);
           }else{
             this.refs.toast.show(json.message,3000);
             //alert(json.message)
@@ -709,6 +712,7 @@ export default class mingxin extends Component {
 
       })
       .catch((error) => {
+        // console.error(error)
         this.setState({
           loaded:false
         })
@@ -777,7 +781,7 @@ export default class mingxin extends Component {
        alert(this.state.unNullName)
        return
      }
-     console.log(parseFloat(this.state.kucun).toFixed(2) < parseFloat(e).toFixed(2))
+     // console.log(parseFloat(this.state.kucun).toFixed(2) < parseFloat(e).toFixed(2))
      if(!this.state.isChaoshu && parseFloat((this.state.kucun*1).toFixed(2)) < parseFloat(e*1).toFixed(2)){
        alert(this.state.errorMessage2)
        return

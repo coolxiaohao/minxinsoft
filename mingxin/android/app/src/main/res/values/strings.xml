@@ -1,0 +1,5 @@
+<resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">jnSHdct4l6TNle4uKruZ8Ei_xeoaO_tepsfCxV</string>
+	<string moduleConfig="true" name="CodePushDeploymentKey">jnSHdct4l6TNle4uKruZ8Ei_xeoaO_tepsfCxV</string>
+    <string name="app_name">mingxinsoft</string>
+</resources>

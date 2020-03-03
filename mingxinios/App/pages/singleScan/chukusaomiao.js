@@ -681,6 +681,7 @@ export default class mingxin extends Component {
           loaded:false
         })
         // console.log(json)
+        // console.error(json.state)
         if (json.state === 'success') {
           var counts = this.state.totalcount + 1;
           if(this.state.isShuliang && parseFloat(this.state.shuLiang) < counts){
@@ -732,6 +733,17 @@ export default class mingxin extends Component {
 
                 val.chayishu = val.jianshu - val.saomiaoshu
                 val.chayishu = parseFloat(val.chayishu).toFixed(2)
+                //多个一样的料号 货区不一样
+                goodsc.forEach((v,i)=>{
+                  // goodsc[nowid].tiaoma
+                  // console.error(val.tiaoma)
+                  if (goodsc[nowid].tiaoma == v.tiaoma){
+                    // goodsc[nowid].saomiaoshu = parseFloat(e).toFixed(2);
+                    v.chayishu = val.jianshu - val.saomiaoshu
+                    goodsc[i].chayishu = parseFloat(v.chayishu).toFixed(2)
+                    // goodsc[index].chayishu = goodsc[nowid].jianshu - goodsc[nowid].saomiaoshu;
+                  }
+                })
                 this.setState({
                   kucun: val.kucun,
                   saomiaoshu:val.saomiaoshu,
@@ -796,6 +808,18 @@ export default class mingxin extends Component {
 
                 val.chayishu = val.jianshu - val.saomiaoshu
                 val.chayishu = parseFloat(val.chayishu).toFixed(2)
+
+                //多个一样的料号 货区不一样
+                goodsc.forEach((v,i)=>{
+                  // goodsc[nowid].tiaoma
+                  // console.error(val.tiaoma)
+                  if (goodsc[nowid].tiaoma == v.tiaoma){
+                    // goodsc[nowid].saomiaoshu = parseFloat(e).toFixed(2);
+                    v.chayishu = val.jianshu - val.saomiaoshu
+                    goodsc[i].chayishu = parseFloat(v.chayishu).toFixed(2)
+                    // goodsc[index].chayishu = goodsc[nowid].jianshu - goodsc[nowid].saomiaoshu;
+                  }
+                })
                 this.setState({
                   kucun: val.kucun,
                   saomiaoshu:val.saomiaoshu,
@@ -809,21 +833,19 @@ export default class mingxin extends Component {
             })
             if(showRe) {return }
           }
-          this.setState({
-            showtiaoma:true,
-            kucun:val.kucun,
-            ReceiveCode:e,
-            saomiaoshu:val.saomiaoshu,
-            dataSource: ds.cloneWithRows(goodsc),
-            showshuliang:true,
-          })
+          // this.setState({
+          //   showtiaoma:true,
+          //   kucun:val.kucun,
+          //   ReceiveCode:e,
+          //   saomiaoshu:val.saomiaoshu,
+          //   dataSource: ds.cloneWithRows(goodsc),
+          //   showshuliang:true,
+          // })
         }else if(json.state == 'error'){
           this.setState({
             loaded:false
           })
-          if(json.msgcode == '004'){
-            alert(this.state.message129)
-          }else if(json.msgcode == '005'){
+          if(json.msgcode == '005'){
             alert(this.state.message1004)
           }else if(json.msgcode == '006'){
             alert(this.state.message1005)
@@ -924,8 +946,22 @@ export default class mingxin extends Component {
        alert(this.state.message150)
        return
      }
+     // console.error(goodsc[nowid],goodsc[nowid-1])
      goodsc[nowid].saomiaoshu = parseFloat(e).toFixed(2);
      goodsc[nowid].chayishu = goodsc[nowid].jianshu - goodsc[nowid].saomiaoshu;
+
+     //多个一样的料号 货区不一样
+     goodsc.forEach((val,index)=>{
+       // goodsc[nowid].tiaoma
+       // console.error(val.tiaoma)
+       if (goodsc[nowid].tiaoma == val.tiaoma){
+         // goodsc[nowid].saomiaoshu = parseFloat(e).toFixed(2);
+         goodsc[index].chayishu = goodsc[nowid].jianshu - goodsc[nowid].saomiaoshu;
+       }
+     })
+
+     // goodsc.remove()
+     // delete goodsc[nowid]
      this.setState({
        showtiaoma:true,
        saomiaoshu:'',
@@ -1119,6 +1155,7 @@ export default class mingxin extends Component {
     var timestamp = Date.parse(new Date())/1000;
     // console.error(JSON.stringify(newgoodscc))
     // console.log(url+'?shuzu='+JSON.stringify(newgoodscc)+'&imgs='+JSON.stringify(imgPickers)+'&saomiaoshijian='+timestamp+'&cangkudaihao='+this.props.navigation.state.params.cangkudaihao+"&dingdanhao="+this.props.navigation.state.params.dingdanhao+"&user_token="+this.state.names.user_token+"&huoqukongbai="+this.state.ishuoqu)
+    // console.error(JSON.stringify(newgoodscc),this.props.navigation.state.params.cangkudaihao,this.props.navigation.state.params.dingdanhao,this.state.ishuoqu)
     return Promise.race([
           fetch(url, {
           method: 'POST',

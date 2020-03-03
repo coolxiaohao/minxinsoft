@@ -419,7 +419,7 @@ export default class mingxin extends Component {
             loaded: true,
             ReceiveCode: e
         })
-
+       //TODO 带订单问题
         const url = urls + "/index.php/api/index/saocangshang?&cangshanghao=" + e;
 
         return Promise.race([

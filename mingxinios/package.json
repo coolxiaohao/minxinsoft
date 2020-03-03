@@ -5,23 +5,24 @@
 	"scripts": {
 		"codepush": "react-native link react-native-code-push",
 		"start": "react-native start",
+		"uploadIos": "code-push release-react mingxinios ios -t 2.14.1 -m false --des '1.解决对于个别数据库无法正常出库BUG\n2.优化页面中英文切换' --d Production ",
 		"ios": "react-native run-ios --device 'CoolHao'",
 		"ioss": "react-native run-ios --simulator 'iPhone 11 Pro Max",
-		"test": "jest"
+		"test": "jest",
+		"icon": "react-native link react-native-vector-icons"
 	},
 	"dependencies": {
 		"react": "16.0.0-alpha.6",
 		"react-native": "0.44.3",
 		"react-native-camera": "^1.1.4",
 		"react-native-cli": "^2.0.1",
-		"react-native-code-push": "^6.1.0",
+		"react-native-vector-icons": "^6.6.0",
+		"react-native-code-push": "^6.0.0",
 		"react-native-device-info": "^0.24.3",
 		"react-native-gp-style": "^1.0.1",
 		"react-native-image-picker": "^0.26.10",
 		"react-native-log-ios": "^1.0.1",
 		"react-native-modal": "^6.5.0",
-		"react-native-page-listview": "^1.2.0",
-		"react-native-table-component": "^1.2.1",
 		"react-native-wechat": "^1.9.9",
 		"react-navigation": "^2.5.3"
 	},

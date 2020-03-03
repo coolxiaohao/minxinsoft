@@ -300,13 +300,16 @@ export default class mingxin extends Component {
            });
 
            let goodsc = [];
-           json.data.forEach((val,index)=>{
-             if(val.weiwanchengshuliang <= '0.00'){
-               return
-             }
-             var chayishu = parseFloat(val.weiwanchengshuliang) - parseFloat(0.00);
-             goodsc.push({'huopingdaihao': val.huopingdaihao,'tiaoma':val.tiaoxingma,'saomiaoshu': parseFloat(0.00).toFixed(2),'jianshu':parseFloat(val.weiwanchengshuliang).toFixed(2),'kucun':parseFloat(val.jiecunshuliang).toFixed(2),"chayishu":parseFloat(chayishu).toFixed(2),'huoqu':val.huoqu})
-           })
+           if (json.data != null){
+             json.data.forEach((val,index)=>{
+               if(val.weiwanchengshuliang <= '0.00'){
+                 return
+               }
+               var chayishu = parseFloat(val.weiwanchengshuliang) - parseFloat(0.00);
+               goodsc.push({'huopingdaihao': val.huopingdaihao,'tiaoma':val.tiaoxingma,'saomiaoshu': parseFloat(0.00).toFixed(2),'jianshu':parseFloat(val.weiwanchengshuliang).toFixed(2),'kucun':parseFloat(val.jiecunshuliang).toFixed(2),"chayishu":parseFloat(chayishu).toFixed(2),'huoqu':val.huoqu})
+             })
+           }
+
            if(goodsc.length == 0){
              this.refs.toast.show(this.state.ReceiveCode+this.state.message170,3000);
              //alert(this.state.ReceiveCode+'已经出完！')
