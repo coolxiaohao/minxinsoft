@@ -1,8 +1,9 @@
 package com.mingxin;
 
 import android.app.Application;
-
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.reactnativecomponent.barcode.RCTCapturePackage;
@@ -32,11 +33,13 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             new RNDeviceInfo(),
             new RCTCapturePackage(),
             new WeChatPackage(),
-            new ImagePickerPackage()
+            new ImagePickerPackage(),
+            new VectorIconsPackage()
       );
     }
   };

@@ -48,6 +48,7 @@ export default class mingxin extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            lastPressed: 0,
             huoquValue: '',
             ReceiveCode: '',
             names: '',
@@ -568,6 +569,12 @@ export default class mingxin extends Component {
                             this.cameraAction()
                         }}>{this.state.choseImgBtn}</Text>
                         <Text style={styles.buttonStyles} onPress={() => {
+                            if (this.state.lastPressed && this.state.lastPressed + 500 >= Date.now()){
+                                return ;
+                            }
+                            this.setState({
+                                lastPressed: Date.now(),
+                            })
                             this.Save()
                         }}>{this.state.sureBtn}</Text>
                         <Text style={styles.buttonStyles} onPress={() => {

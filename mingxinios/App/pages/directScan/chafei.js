@@ -37,8 +37,8 @@ import Modals from 'react-native-modal'
 // let {Platform} = React;
 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 let year = new Date().getFullYear();
-let month = (new Date().getMonth() + 1) < 10 ? '0'+(new Date().getMonth() + 1):(new Date().getMonth() + 1);
-let day = new Date().getDate() < 10 ? '0' + new Date().getDate(): new Date().getDate();
+let month = (new Date().getMonth() + 1) < 10 ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1);
+let day = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate();
 export default class mingxin extends Component {
     static defaultProps = {
         date: new Date(),
@@ -67,7 +67,7 @@ export default class mingxin extends Component {
             edate: this.props.date,
             stime: this.props.stime,//开始时间
             etime: this.props.etime,//结束时间
-            getes:0,
+            getes: 0,
             monthsCounts: '',
             names: [],
             showgonghao: true,
@@ -123,99 +123,99 @@ export default class mingxin extends Component {
                 message130: val.name
             })
         }
-        if (val.id == 313){
+        if (val.id == 313) {
             this.setState({
-                stimeName:val.name
+                stimeName: val.name
             })
         }
-        if (val.id == 314){
+        if (val.id == 314) {
             this.setState({
-                etimeName:val.name
+                etimeName: val.name
             })
         }
-        if (val.id == 53){
+        if (val.id == 53) {
             this.setState({
-                quxiao:val.name
+                quxiao: val.name
             })
         }
-        if (val.id == 66){
+        if (val.id == 66) {
             this.setState({
-                queren:val.name
+                queren: val.name
             })
         }
-        if (val.id == 315){
+        if (val.id == 315) {
             this.setState({
-                chaXunName:val.name
+                chaXunName: val.name
             })
         }
-        if (val.id == 316){
+        if (val.id == 316) {
             this.setState({
-                message316:val.name
+                message316: val.name
             })
         }
-        if (val.id == 317){
+        if (val.id == 317) {
             this.setState({
-                message317:val.name
+                message317: val.name
             })
         }
-        if (val.id == 318){
+        if (val.id == 318) {
             this.setState({
-                message318:val.name
+                message318: val.name
             })
         }
-        if (val.id == 319){
+        if (val.id == 319) {
             this.setState({
-                message319:val.name
+                message319: val.name
             })
         }
-        if (val.id == 320){
+        if (val.id == 320) {
             this.setState({
-                message320:val.name
+                message320: val.name
             })
         }
-        if (val.id == 321){
+        if (val.id == 321) {
             this.setState({
-                message321:val.name
+                message321: val.name
             })
         }
-        if (val.id == 322){
+        if (val.id == 322) {
             this.setState({
-                message322:val.name
+                message322: val.name
             })
         }
-        if (val.id == 323){
+        if (val.id == 323) {
             this.setState({
-                message323:val.name
+                message323: val.name
             })
         }
-        if (val.id == 324){
+        if (val.id == 324) {
             this.setState({
-                message324:val.name
+                message324: val.name
             })
         }
-        if (val.id == 325){
+        if (val.id == 325) {
             this.setState({
-                message325:val.name
+                message325: val.name
             })
         }
-        if (val.id == 326){
+        if (val.id == 326) {
             this.setState({
-                message326:val.name
+                message326: val.name
             })
         }
-        if (val.id == 327){
+        if (val.id == 327) {
             this.setState({
-                message327:val.name
+                message327: val.name
             })
         }
-        if (val.id == 328){
+        if (val.id == 328) {
             this.setState({
-                message328:val.name
+                message328: val.name
             })
         }
-        if (val.id == 335){
+        if (val.id == 335) {
             this.setState({
-                message335:val.name
+                message335: val.name
             })
         }
 
@@ -311,12 +311,12 @@ export default class mingxin extends Component {
                 locale: 'zh-Hans'
             });
             if (action !== DatePickerAndroid.dismissedAction) {
-                if (this.state.getes!= 0&&this.state.getes == 1){
+                if (this.state.getes != 0 && this.state.getes == 1) {
                     this.setState({
                         date: new Date(),
                         stime: year + '-' + this.joint(month + 1) + '-' + this.joint(day)
                     })
-                }else {
+                } else {
                     this.setState({
                         edate: new Date(),
                         etime: year + '-' + this.joint(month + 1) + '-' + this.joint(day)
@@ -345,7 +345,8 @@ export default class mingxin extends Component {
                     // marginTop: 10,
                     // marginLeft: 10,
                     // marginRight: 10,
-                    marginBottom: 80,}}>
+                    marginBottom: width > 375 ? 80 : 50,
+                }}>
                     <View style={{
                         backgroundColor: '#ffffff',
                         borderRadius: 10,
@@ -378,8 +379,12 @@ export default class mingxin extends Component {
                                                                   this.getData(e)
                                                               }
                                                           })}>
-                                            <Image style={{width: 20, height: 20}} source={{uri: 'saomab'}}/>
-                                            <Text style={{fontSize: 8, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                            <Image style={{width: width > 375 ? 20 : 18, height: width > 375 ? 20 : 18,marginTop: width > 375 ? 0 : 5}}
+                                                   source={{uri: 'saomab'}}/>
+                                            <Text style={{
+                                                fontSize: width > 375 ? 8 : 6,
+                                                color: '#000000'
+                                            }}>{this.state.saoyiSName}</Text>
                                         </TouchableOpacity>
                                 }
                             </View>
@@ -453,19 +458,27 @@ export default class mingxin extends Component {
                                 </View>
                             </View>
                             <View style={{
-                                justifyContent:'center',
-                                alignItems:'center',
+                                justifyContent: 'center',
+                                alignItems: 'center',
                                 width: width - 40,
                                 marginTop: 10,
-                                marginBottom: 10,}}>
+                                marginBottom: 10,
+                            }}>
                                 {/*<Text style={{borderRadius: 5,borderWidth: 1,minWidth:'100%',minHeight:40,paddingRight: 10,paddingLeft:10,}}>{'查询'}</Text>*/}
-                                <CustomButton onPress={()=>{
+                                <CustomButton onPress={() => {
                                     this.submitChaxun()
                                 }}
                                               bgColor={'#74b9ff'}
                                               text={this.state.chaXunName}
-                                              style={{minWidth:80,minHeight:40,textAlign:'center',borderRadius:10,overflow: 'hidden',fontSize:18}}
-                                              size={30}/>
+                                              style={{
+                                                  minWidth: width > 375 ? 80 : 50,
+                                                  minHeight: width > 375 ? 40 : 30,
+                                                  textAlign: 'center',
+                                                  borderRadius: 10,
+                                                  overflow: 'hidden',
+                                                  fontSize: 18
+                                              }}
+                                              size={width > 375 ? 30 : 20}/>
                             </View>
                         </View>
                     </View>
@@ -501,7 +514,7 @@ export default class mingxin extends Component {
                     bottom: 0 - this.state.scrollY + this.state.scrollY,
                     left: 0,
                     width: width,
-                    height: 80,
+                    height: width > 375 ? 80 : 50,
                     backgroundColor: '#e5f7ff',
                     borderTopLeftRadius: 10,
                     borderTopRightRadius: 10,
@@ -509,8 +522,10 @@ export default class mingxin extends Component {
                     borderBottomLeftRadius: 0,
                 }}>
                     {/*<Text style={{ flex:1,}}>总行数:</Text>*/}
-                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title={`${this.state.message316}`}/>
-                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title={`${this.state.message317}`}/>
+                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons}
+                            title={`${this.state.message316}`}/>
+                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons}
+                            title={`${this.state.message317}`}/>
                     {/*<Text style={{ flex:1,}}>当前页数:</Text>*/}
                 </View>
                 <Modal
@@ -533,7 +548,7 @@ export default class mingxin extends Component {
                             position: 'absolute',
                             bottom: 0,
                             width: width,
-                            height: 300,
+                            height: width > 375 ? 300 : 270,
                             backgroundColor: '#ffffff',
                             borderTopLeftRadius: 10,
                             borderTopRightRadius: 10,
@@ -559,17 +574,17 @@ export default class mingxin extends Component {
                                 </TouchableOpacity>
                             </View>
                             <DatePickerIOS
-                                date={this.state.getes==1?this.state.date:this.state.edate}
+                                date={this.state.getes == 1 ? this.state.date : this.state.edate}
                                 format='YYYY-MM-DD'
                                 onDateChange={(newDate) => {
                                     let sdate = this.state.date;
                                     let edate = this.state.edate;
-                                    let stime = sdate.getFullYear()+'-'+ this.joint(sdate.getMonth()+1)+'-'+this.joint(sdate.getDate())
-                                    let etime = edate.getFullYear()+'-'+ this.joint(edate.getMonth()+1)+'-'+this.joint(edate.getDate())
-                                    if (this.state.getes!=0&&this.state.getes == 1){//stime
+                                    let stime = sdate.getFullYear() + '-' + this.joint(sdate.getMonth() + 1) + '-' + this.joint(sdate.getDate())
+                                    let etime = edate.getFullYear() + '-' + this.joint(edate.getMonth() + 1) + '-' + this.joint(edate.getDate())
+                                    if (this.state.getes != 0 && this.state.getes == 1) {//stime
                                         this.setState({date: newDate});
                                         this.setState({stime: stime})
-                                    }else {
+                                    } else {
                                         this.setState({edate: newDate});
                                         this.setState({etime: etime})
                                         // this.setState({getes:0,isShowDate: false, stime: new Date().toLocaleDateString().replace(/\//g, '-')})
@@ -618,6 +633,7 @@ export default class mingxin extends Component {
             </View>
         );
     }
+
     //渲染数据
     renderRow(item) {
         // console.error(item)
@@ -625,24 +641,25 @@ export default class mingxin extends Component {
             <TouchableOpacity onPress={() => {//点击一行显示姓名，要用到TouchableOpacity组件
             }}>
                 {/*{list}*/}
-                <View  style={styles.touch}>
+                <View style={styles.touch}>
                     <Text style={styles.texts}>{this.state.message321}: {item.gongxuhao}</Text>
                     <Text style={styles.texts}>{this.state.message322}: {item.gongxuname}</Text>
                 </View>
-                <View  style={styles.touch}>
+                <View style={styles.touch}>
                     <Text style={styles.texts}>{this.state.message323}: {item.kuanhao}</Text>
                     <Text style={styles.texts}>{this.state.message324}: {item.q}</Text>
                 </View>
-                <View  style={styles.touch}>
+                <View style={styles.touch}>
                     <Text style={styles.texts}>{this.state.message325}: {item.zhahao}</Text>
                     <Text style={styles.texts}>{this.state.message326}: {item.c}</Text>
                 </View>
-                <View  style={styles.touch}>
+                <View style={styles.touch}>
                     <Text style={styles.texts}>{this.state.message327}: {item.t}</Text>
                 </View>
             </TouchableOpacity>
         </View>
     }
+
     //初始化加载
     onLoad() {
         setTimeout(() => {
@@ -651,25 +668,28 @@ export default class mingxin extends Component {
             })
         }, 1000)
     }
+
     //行风格线
     renderSeparator(sectionID, rowID, adjacentRowHighlighted) {
         return <View key={rowID} style={styles.line}></View>
     }
+
     //日期月日拼接0
-    joint(str){
-        if (str < 10){
+    joint(str) {
+        if (str < 10) {
             str = "0" + str;
         }
         return str
     }
+
     //分页
     fenye(type) {
         let page = this.state.pageNum;
-        let isXia=true;
+        let isXia = true;
         if (type == 0) {
             page = page - 1;
         } else {
-            if (page*10 > this.state.hangshu){
+            if (page * 10 > this.state.hangshu) {
                 isXia = false;
             }
             page = page + 1;
@@ -680,29 +700,29 @@ export default class mingxin extends Component {
             this.getDateRenter(page)
         } else if (this.state.ReceiveCode == '') {
             this.refs.toast.show(this.state.message328, 3000);
-        } else if (!isXia){
+        } else if (!isXia) {
             this.refs.toast.show(this.state.message319, 3000);
-        }else {
+        } else {
             this.refs.toast.show(this.state.message318, 3000);
         }
     }
 
     getDateRenter(page) {
-        _this=this
+        _this = this
         this.setState({
             loaded: true,
             // ReceiveCode: e
         })
-        if (this.state.ReceiveCode == '' || this.state.ReceiveCode == 'undefined' || this.state.ReceiveCode == null){
+        if (this.state.ReceiveCode == '' || this.state.ReceiveCode == 'undefined' || this.state.ReceiveCode == null) {
             // console.error(url)
             this.setState({
                 loaded: false
             })
             this.refs.toast.show(this.state.message328, 3000);
-            return ;
+            return;
         }
         // var timestamp = Date.parse(new Date()) / 1000;
-        const url = urls + "/index.php/api/index/chafei1?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime+"&etime="+this.state.etime +"&page="+page;
+        const url = urls + "/index.php/api/index/chafei1?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime + "&etime=" + this.state.etime + "&page=" + page;
         // console.error(url)
         return Promise.race([
             fetch(url),
@@ -723,7 +743,7 @@ export default class mingxin extends Component {
                 console.log(json)
                 if (json.state === 'success') {
                     this.setState({
-                        hangshu:json.data.count,
+                        hangshu: json.data.count,
                         //ReceiveCode:'',
                         data: json.data.data,
                         // ifDataEmpty: false,
@@ -762,22 +782,22 @@ export default class mingxin extends Component {
     }
 
     // 点击查询
-    submitChaxun(){
-        _this=this
+    submitChaxun() {
+        _this = this
         this.setState({
             loaded: true,
             // ReceiveCode: e
         })
-        if (this.state.ReceiveCode == '' || this.state.ReceiveCode == 'undefined' || this.state.ReceiveCode == null){
+        if (this.state.ReceiveCode == '' || this.state.ReceiveCode == 'undefined' || this.state.ReceiveCode == null) {
             // console.error(url)
             this.setState({
                 loaded: false
             })
             this.refs.toast.show(this.state.message328, 3000);
-            return ;
+            return;
         }
         // var timestamp = Date.parse(new Date()) / 1000;
-        const url = urls + "/index.php/api/index/chafei1?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime+"&etime="+this.state.etime +"&page="+this.state.pageNum;
+        const url = urls + "/index.php/api/index/chafei1?&EId=" + this.state.ReceiveCode + "&stime=" + this.state.stime + "&etime=" + this.state.etime + "&page=" + this.state.pageNum;
         // console.error(url)
         return Promise.race([
             fetch(url),
@@ -799,7 +819,7 @@ export default class mingxin extends Component {
                 if (json.state === 'success') {
                     // console.error(json)
                     this.setState({
-                        hangshu:json.data.count,
+                        hangshu: json.data.count,
                         //ReceiveCode:'',
                         data: json.data.data,
                         // ifDataEmpty: false,
@@ -837,31 +857,33 @@ export default class mingxin extends Component {
                 //alert(this.state.message130)
             });
     }
+
     //点击确认
     setDate(newDate) {
         let sdate = this.state.date;
         let edate = this.state.edate;
-        let stime = sdate.getFullYear()+'-'+ this.joint(sdate.getMonth()+1)+'-'+this.joint(sdate.getDate())
-        let etime = edate.getFullYear()+'-'+ this.joint(edate.getMonth()+1)+'-'+this.joint(edate.getDate())
+        let stime = sdate.getFullYear() + '-' + this.joint(sdate.getMonth() + 1) + '-' + this.joint(sdate.getDate())
+        let etime = edate.getFullYear() + '-' + this.joint(edate.getMonth() + 1) + '-' + this.joint(edate.getDate())
         // let month= time.match(/);
-        if (this.state.getes!=0&&this.state.getes == 1){//stime
+        if (this.state.getes != 0 && this.state.getes == 1) {//stime
             this.setState({isShowDate: false, stime: stime})
-        }else {
+        } else {
             this.setState({isShowDate: false, etime: etime})
         }
     }
+
     //点击取消
     closeModal() {
         let time = new Date();
-        time =  time.getFullYear()+'-'+ this.joint(time.getMonth()+1)+'-'+this.joint(time.getDate())
-        if (this.state.getes!=0&&this.state.getes == 1){//stime
+        time = time.getFullYear() + '-' + this.joint(time.getMonth() + 1) + '-' + this.joint(time.getDate())
+        if (this.state.getes != 0 && this.state.getes == 1) {//stime
             this.setState({isShowDate: false, stime: time})
-        }else {
+        } else {
             this.setState({isShowDate: false, etime: time})
         }
     }
 
-    getEId(e){
+    getEId(e) {
         _that = this;
         if (e == '') {
             this.setState({
@@ -869,7 +891,8 @@ export default class mingxin extends Component {
                 ReceiveCode: ''
             })
             return
-        };
+        }
+        ;
         this.setState({
             loaded: true,
             // ReceiveCode: e
@@ -895,7 +918,7 @@ export default class mingxin extends Component {
                 if (json.state === 'success') {
                     // console.error(json)
                     this.setState({
-                        EuserName:e,
+                        EuserName: e,
                         ReceiveCode: json.data,
                         loaded: false,
                     });
@@ -928,7 +951,8 @@ export default class mingxin extends Component {
         _that = this;
         if (e == '') {
             return
-        };
+        }
+        ;
         this.setState({
             loaded: true,
             // ReceiveCode: e
@@ -954,7 +978,7 @@ export default class mingxin extends Component {
                 if (json.state === 'success') {
                     // console.error(json)
                     this.setState({
-                        ReceiveCode:e,
+                        ReceiveCode: e,
                         EuserName: json.data,
                         loaded: false,
                     });
@@ -998,36 +1022,41 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: width - 40,
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: width > 375 ? 10 : 0,
+        marginBottom: width > 375 ? 10 : 0,
     },
     textStyles: {
         color: '#000000',
-        fontSize: 18,
+        fontSize: width > 375 ? 18 : 15,
         marginRight: 10,
         flex: 0.6,
         textAlign: 'right'
     },
-    inputStyle:{
+    inputStyle: {
         // textAlign:'center',
         // justifyContent: 'center',
         // alignItems: 'center',
-        fontSize:18,
-        width: 180,
+        marginTop: width > 375 ? 0 : 5,
+        fontSize: width > 375 ? 18 : 15,
+        width: width > 375 ? 180 : 160,
+        // fontSize:18,
+        // width: 180,
         backgroundColor: '#e5f7ff',
         borderRadius: 10,
-        height: 40,
-        paddingTop: 10,
+        height: width > 375 ? 40 : 30,
+        paddingTop: width > 375 ? 10 : 5,
         paddingLeft: 20,
         borderColor: '#c8c8c8',
         borderWidth: 1,
         flex: 1
     },
     inputStyles: {
-        width: 180,
+        padding:width < 375 ? 0: 5,
+        marginTop: width > 375 ? 0 : 5,
+        width: width > 375 ? 180 : 160,
         backgroundColor: '#ffffff',
         borderRadius: 10,
-        height: 40,
+        height: width > 375 ? 40 : 30,
         paddingLeft: 20,
         borderColor: '#c8c8c8',
         borderWidth: 1,
@@ -1041,11 +1070,11 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     nameStyles: {
-        fontSize: 26,
+        fontSize: width > 375 ? 26 : 22,
         textAlign: 'center',
         margin: 0,
         color: '#000000',
-        marginTop: 20
+        marginTop: width > 375 ? 20 : 10
     },
     titleStyles: {
         fontSize: 18,
@@ -1053,9 +1082,9 @@ const styles = StyleSheet.create({
         margin: 0,
         color: '#000000'
     },
-    contentForm:{
+    contentForm: {
         marginRight: 10,
-        marginLeft:10,
+        marginLeft: 10,
         marginTop: 10,
         backgroundColor: '#e5f7ff',
         borderRadius: 10,
@@ -1069,7 +1098,7 @@ const styles = StyleSheet.create({
     },
     Footerbuttons: {
         flex: 1,
-        fontSize: 15,
+        fontSize: width > 375 ? 15 : 12,
         marginBottom: 5,
     },
     row: {
@@ -1086,7 +1115,7 @@ const styles = StyleSheet.create({
     texts: {
         flex: 1,
         // width:50,
-        fontSize: 15,
+        fontSize: width > 375 ? 15 : 12,
         marginBottom: 5,
         // marginLeft: 10,
         // marginTop: 7

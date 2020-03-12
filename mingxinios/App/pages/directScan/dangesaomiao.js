@@ -215,11 +215,12 @@ export default class mingxin extends Component {
         return (
             <View style={styles.container}>
                 <KeyboardAvoidingView>
-                    <ScrollView style={{paddingVertical: 0, width: '100%', marginBottom: 80}} onScroll={(event => {
-                        {
-                            this.setState({scrollY: event.nativeEvent.contentOffset.y})
-                        }
-                    })}>
+                    <ScrollView style={{paddingVertical: 0, width: '100%', marginBottom: width > 375 ? 80 : 50}}
+                                onScroll={(event => {
+                                    {
+                                        this.setState({scrollY: event.nativeEvent.contentOffset.y})
+                                    }
+                                })}>
                         <View style={styles.chaxun}>
                             <Text style={styles.nameStyles}>
                                 {this.state.titleName}
@@ -242,8 +243,12 @@ export default class mingxin extends Component {
                                                           this.getData(e)
                                                       }
                                                   })}>
-                                    <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
-                                    <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                    <Image style={{width: width > 375 ? 20 : 18, height: width > 375 ? 20 : 18,marginTop: width > 375 ? 0 : 5}}
+                                           source={{uri: 'saomab'}}/>
+                                    <Text style={{
+                                        fontSize: width > 375 ? 8 : 6,
+                                        color: '#000000'
+                                    }}>{this.state.saoyiSName}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -281,7 +286,7 @@ export default class mingxin extends Component {
                     bottom: 0 - this.state.scrollY + this.state.scrollY,
                     left: 0,
                     width: width,
-                    height: 80,
+                    height: width > 375 ? 80 : 50,
                     backgroundColor: '#e5f7ff',
                     borderTopLeftRadius: 10,
                     borderTopRightRadius: 10,
@@ -289,8 +294,10 @@ export default class mingxin extends Component {
                     borderBottomLeftRadius: 0,
                 }}>
                     {/*<Text style={{ flex:1,}}>总行数:</Text>*/}
-                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons} title={`${this.state.message316}`}/>
-                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons} title={`${this.state.message317}`}/>
+                    <Button onPress={(item) => this.fenye(0)} style={styles.Footerbuttons}
+                            title={`${this.state.message316}`}/>
+                    <Button onPress={(item) => this.fenye(1)} style={styles.Footerbuttons}
+                            title={`${this.state.message317}`}/>
                     {/*<Text style={{ flex:1,}}>当前页数:</Text>*/}
                 </View>
 
@@ -330,11 +337,11 @@ export default class mingxin extends Component {
     //分页
     fenye(type) {
         let page = this.state.pageNum;
-        let isXia=true;
+        let isXia = true;
         if (type == 0) {
             page = page - 1;
         } else {
-            if (page*15 > this.state.hangshu){
+            if (page * 15 > this.state.hangshu) {
                 isXia = false;
 
             }
@@ -346,9 +353,9 @@ export default class mingxin extends Component {
             this.getDateRenter(page)
         } else if (this.state.tiaoma == '') {
             this.refs.toast.show(this.state.message331, 3000);
-        } else if (!isXia){
+        } else if (!isXia) {
             this.refs.toast.show(this.state.message319, 3000);
-        }else {
+        } else {
             this.refs.toast.show(this.state.message318, 3000);
         }
     }
@@ -382,7 +389,7 @@ export default class mingxin extends Component {
                     // data = json.data.data;
                     let notelang = json.data.en_or_cn;
                     this.setState({
-                        hangshu:json.data.count,
+                        hangshu: json.data.count,
                         pageNum: page,
                         //ReceiveCode:'',
                         data: json.data.data,
@@ -478,7 +485,7 @@ export default class mingxin extends Component {
                     // console.error(json.data.data);
                     let notelang = json.data.en_or_cn;
                     this.setState({
-                        hangshu:json.data.count,
+                        hangshu: json.data.count,
                         //ReceiveCode:'',
                         data: json.data.data,
                         // ifDataEmpty: false,
@@ -533,7 +540,7 @@ export default class mingxin extends Component {
                     ziduan = item[val.ziduan];
                 }
                 let text = '';
-                if (ziduan != "undefined" && ziduan != null && ziduan != ''){
+                if (ziduan != "undefined" && ziduan != null && ziduan != '') {
                     if (this.state.lang == 'cn') {
                         text = <Text style={styles.texts} key={index}>{val.zhongwen}: {ziduan}</Text>;
                     } else {
@@ -546,7 +553,7 @@ export default class mingxin extends Component {
                     } else {
                         textall = text;
                         //最后一个
-                        if (num == this.state.notelang.length){
+                        if (num == this.state.notelang.length) {
                             // alert(val.ziduan);
                             list.push(<View key={index} style={styles.touch}>{textall}</View>)
                             textall = null;
@@ -569,10 +576,9 @@ export default class mingxin extends Component {
 }
 
 const styles = StyleSheet.create({
-
     Footerbuttons: {
         flex: 1,
-        fontSize: 15,
+        fontSize: width > 375 ? 15 : 12,
         marginBottom: 5,
     },
     touch: {
@@ -621,20 +627,25 @@ const styles = StyleSheet.create({
     },
     textStyles: {
         color: '#000000',
-        fontSize: 18,
+        // fontSize: 18,
+        fontSize: width > 375 ? 18 : 15,
         marginRight: 10,
         flex: 0.4,
         textAlign: 'right'
     },
     inputStyles: {
-        width: 180,
+        // width: 180,
+        padding:width < 375 ? 0: 5,
         backgroundColor: 'white',
         borderRadius: 6,
-        height: 40,
-        paddingLeft: 20,
+        // height: 40,
+        width: width > 375 ? 180 : 140,
+        height: width > 375 ? 40 : 30,
+        paddingLeft: width > 375 ? 20 : 10,
         borderColor: '#c8c8c8',
         borderWidth: 1,
-        flex: 1
+        flex: 1,
+        marginTop: width > 375 ? 0 : 5,
     },
     container: {
         flex: 1,
@@ -642,6 +653,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#f5f7f9',
         position: 'relative',
+        // width: 3,
     },
     tablecontainer: {
         flex: 1,
@@ -649,7 +661,7 @@ const styles = StyleSheet.create({
         paddingTop: 20
     },
     head: {
-        height: 40,
+        height: width > 375 ? 40 : 20,
         backgroundColor: '#21b9fc'
     },
     text: {
@@ -657,14 +669,14 @@ const styles = StyleSheet.create({
     },
     nameStyles: {
         backgroundColor: '#ffffff',
-        fontSize: 26,
+        fontSize: width > 375 ? 26 : 22,
         textAlign: 'center',
         margin: 0,
         color: '#000000',
-        marginTop: 20
+        marginTop: width > 375 ? 20 : 10
     },
     titleStyles: {
-        fontSize: 18,
+        fontSize: width > 375 ? 18 : 16,
         textAlign: 'center',
         margin: 0,
         color: '#000000'
@@ -686,7 +698,7 @@ const styles = StyleSheet.create({
     texts: {
         flex: 1,
         // width:50,
-        fontSize: 15,
+        fontSize: width > 375 ? 15 : 12,
         marginBottom: 5,
         // marginLeft: 10,
         // marginTop: 7

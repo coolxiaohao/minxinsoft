@@ -4548,6 +4548,11 @@ react-native-image-picker@^0.26.10:
   version "0.26.10"
   resolved "http://registry.npm.taobao.org/react-native-image-picker/download/react-native-image-picker-0.26.10.tgz#0bb9ab928984948c67aee0b9e64216bee007a9fc"
 
+react-native-linear-gradient@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.npm.taobao.org/react-native-linear-gradient/download/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+  integrity sha1-liFcvF7HoBJHogiQiIqnW4NNRKA=
+
 react-native-log-ios@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/react-native-log-ios/download/react-native-log-ios-1.0.1.tgz#69ccf6f2c5302e87883910261ac58d6c768963cf"

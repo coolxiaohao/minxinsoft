@@ -6,7 +6,7 @@
 		"start": "react-native start",
 		"android": "react-native run-android",
 		"test": "jest",
-		"uploadAndroid": "code-push release-react mingxin android -t 1.0.0 -m false --des '1.解决对于个别数据库无法正常出库BUG\n2.优化页面中英文切换' --d Production ",
+		"uploadAndroid": "code-push release-react mingxin android -t 1.0.0 -m false --des '1.优化登陆页面' --d Production ",
 		"pageage": "cd android && ./gradlew assembleRelease",
 		"codepush": "react-native link react-native-code-push",
 		"icon": "react-native link react-native-vector-icons"
@@ -22,7 +22,8 @@
 		"react-native-smart-barcode": "^1.0.6",
 		"react-native-vector-icons": "^6.6.0",
 		"react-native-wechat": "^1.9.9",
-		"react-navigation": "^2.5.3"
+		"react-navigation": "^2.5.3",
+		"react-native-linear-gradient": "^2.5.6"
 	},
 	"devDependencies": {
 		"babel-jest": "23.2.0",

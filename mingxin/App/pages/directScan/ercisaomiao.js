@@ -231,11 +231,12 @@ export default class mingxin extends Component {
         return (
             <View style={styles.container}>
                 <KeyboardAvoidingView>
-                    <ScrollView style={{paddingVertical: 0, width: '100%', marginBottom: 80}} onScroll={(event => {
-                        {
-                            this.setState({scrollY: event.nativeEvent.contentOffset.y})
-                        }
-                    })}>
+                    <ScrollView style={{paddingVertical: 0, width: '100%', marginBottom: width > 375 ? 80 : 50}}
+                                onScroll={(event => {
+                                    {
+                                        this.setState({scrollY: event.nativeEvent.contentOffset.y})
+                                    }
+                                })}>
                         <View style={styles.chaxun}>
                             <Text style={styles.nameStyles}>
                                 {this.state.titleName}
@@ -259,8 +260,12 @@ export default class mingxin extends Component {
                                                               this.getTiaoMa(e, 1)
                                                           }
                                                       })}>
-                                        <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
-                                        <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                        <Image style={{width: width > 375 ? 20 : 18, height: width > 375 ? 20 : 18,marginTop: width > 375 ? 0 : 5}}
+                                               source={{uri: 'saomab'}}/>
+                                        <Text style={{
+                                            fontSize: width > 375 ? 8 : 6,
+                                            color: '#000000'
+                                        }}>{this.state.saoyiSName}</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.formStyles}>
@@ -281,8 +286,12 @@ export default class mingxin extends Component {
                                                               this.getTiaoMa(e, 2)
                                                           }
                                                       })}>
-                                        <Image style={{width: 18, height: 18}} source={{uri: 'saomab'}}/>
-                                        <Text style={{fontSize: 6, color: '#000000'}}>{this.state.saoyiSName}</Text>
+                                        <Image style={{width: width > 375 ? 20 : 18, height: width > 375 ? 20 : 18,marginTop: width > 375 ? 0 : 5}}
+                                               source={{uri: 'saomab'}}/>
+                                        <Text style={{
+                                            fontSize: width > 375 ? 8 : 6,
+                                            color: '#000000'
+                                        }}>{this.state.saoyiSName}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -321,7 +330,7 @@ export default class mingxin extends Component {
                     bottom: 0 - this.state.scrollY + this.state.scrollY,
                     left: 0,
                     width: width,
-                    height: 80,
+                    height: width > 375 ? 80 : 50,
                     backgroundColor: '#e5f7ff',
                     borderTopLeftRadius: 10,
                     borderTopRightRadius: 10,
@@ -384,13 +393,13 @@ export default class mingxin extends Component {
         }
         // alert(page > 0 && this.state.tiaoma != '')
 
-        if (page > 0 && this.state.tiaoma1 != '' && this.state.tiaoma2 != ''&& isXia) {
+        if (page > 0 && this.state.tiaoma1 != '' && this.state.tiaoma2 != '' && isXia) {
             this.getDateRenter(page)
         } else if (this.state.tiaoma1 == '') {
-            this.refs.toast.show(this.state.tiaoma1+this.state.message339, 3000);
-        }else if ( this.state.tiaoma2 == ''){
-            this.refs.toast.show(this.state.tiaoma2+this.state.message339, 3000);
-        }else if (!isXia) {
+            this.refs.toast.show(this.state.tiaoma1 + this.state.message339, 3000);
+        } else if (this.state.tiaoma2 == '') {
+            this.refs.toast.show(this.state.tiaoma2 + this.state.message339, 3000);
+        } else if (!isXia) {
             this.refs.toast.show(this.state.message319, 3000);
         } else {
             this.refs.toast.show(this.state.message318, 3000);
@@ -402,11 +411,11 @@ export default class mingxin extends Component {
         this.setState({
             loaded: true,
         })
-        if (this.state.tiaoma1 == ''){
-            this.refs.toast.show(this.state.tiaoma1+this.state.message339, 3000);
+        if (this.state.tiaoma1 == '') {
+            this.refs.toast.show(this.state.tiaoma1 + this.state.message339, 3000);
         }
-        if (this.state.tiaoma2 == ''){
-            this.refs.toast.show(this.state.tiaoma2+this.state.message339, 3000);
+        if (this.state.tiaoma2 == '') {
+            this.refs.toast.show(this.state.tiaoma2 + this.state.message339, 3000);
         }
         const url = urls + "/index.php/api/index/ercisaomiao?&tiaoma1=" + this.state.tiaoma1 + "&tiaoma2=" + this.state.tiaoma2 + "&page=" + page;
         // const url = urls + "/index.php/api/index/dangesaomiao?&tiaoma=" + e;
@@ -609,7 +618,7 @@ const styles = StyleSheet.create({
 
     Footerbuttons: {
         flex: 1,
-        fontSize: 15,
+        fontSize: width > 375 ? 15 : 12,
         marginBottom: 5,
     },
     touch: {
@@ -660,7 +669,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         width: width - 40,
-        marginTop: 15,
+        marginTop: width > 375 ? 15 : 7,
         // paddingTop: 10,
 
 
@@ -668,20 +677,22 @@ const styles = StyleSheet.create({
     },
     textStyles: {
         color: '#000000',
-        fontSize: 18,
+        fontSize: width > 375 ? 18 : 15,
         marginRight: 10,
         flex: 0.4,
         textAlign: 'right'
     },
     inputStyles: {
-        width: 180,
+        padding:width < 375 ? 0: 5,
+        width: width > 375 ? 180 : 160,
         backgroundColor: 'white',
         borderRadius: 6,
-        height: 40,
+        height: width > 375 ? 40 : 30,
         paddingLeft: 20,
         borderColor: '#c8c8c8',
         borderWidth: 1,
-        flex: 1
+        flex: 1,
+        marginTop: width > 375 ? 0 : 5,
     },
     container: {
         flex: 1,
@@ -690,28 +701,28 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f7f9',
         position: 'relative',
     },
-    tablecontainer: {
-        flex: 1,
-        padding: 16,
-        paddingTop: 20
-    },
-    head: {
-        height: 40,
-        backgroundColor: '#21b9fc'
-    },
+    // tablecontainer: {
+    //     flex: 1,
+    //     padding: 16,
+    //     paddingTop: 20
+    // },
+    // head: {
+    //     height: 40,
+    //     backgroundColor: '#21b9fc'
+    // },
     text: {
         margin: 6
     },
     nameStyles: {
         backgroundColor: '#ffffff',
-        fontSize: 26,
+        fontSize: width > 375 ? 26 : 22,
         textAlign: 'center',
         margin: 0,
         color: '#000000',
-        marginTop: 20
+        marginTop: width > 375 ? 20 : 10
     },
     titleStyles: {
-        fontSize: 18,
+        fontSize: width > 375 ? 18 : 16,
         textAlign: 'center',
         margin: 0,
         color: '#000000'
@@ -720,7 +731,7 @@ const styles = StyleSheet.create({
         // maxWidth:width - 20,
         backgroundColor: '#ffffff',
         borderRadius: 10,
-        paddingBottom: 20,
+        paddingBottom: width > 375 ? 20 : 10,
         // paddingLeft: 10,
         // paddingRight: 10,
         margin: 10,
@@ -736,7 +747,7 @@ const styles = StyleSheet.create({
     texts: {
         flex: 1,
         // width:50,
-        fontSize: 15,
+        fontSize: width > 375 ? 15 : 12,
         marginBottom: 5,
         // marginLeft: 10,
         // marginTop: 7

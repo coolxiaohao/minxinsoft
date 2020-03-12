@@ -47,6 +47,7 @@ export default class mingxin extends Component {
   constructor(props) {
       super(props);
       this.state = {
+        lastPressed: 0,
         ReceiveCode:'',
         names: '',
         hangshu: 0,
@@ -475,7 +476,15 @@ export default class mingxin extends Component {
 
           <View style={styles.rowStyles}>
             <Text style={styles.buttonStyles} onPress={()=>{this.cameraAction()}}>{this.state.choseImgBtn}</Text>
-            <Text style={styles.buttonStyles} onPress={()=>{this.Save()}}>{this.state.sureBtn}</Text>
+            <Text style={styles.buttonStyles} onPress={()=>{
+              if (this.state.lastPressed && this.state.lastPressed + 500 >= Date.now()){
+                return ;
+              }
+              this.setState({
+                lastPressed: Date.now(),
+              })
+              this.Save()
+            }}>{this.state.sureBtn}</Text>
             <Text style={styles.buttonStyles} onPress={()=>{this.backBtn()}}>{this.state.backBtn}</Text>
           </View>
         </ScrollView>

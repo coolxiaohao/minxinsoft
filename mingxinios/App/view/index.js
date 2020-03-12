@@ -152,7 +152,7 @@ export default class mingxin extends Component {
         })
         AsyncStorage.getItem('langArr', (error, result) => {
             var res = JSON.parse(result)
-            //console.error(res)
+            // console.error(res)
             if (result != null) {
                 var newArr = []
                 res.map((val) => {
@@ -187,6 +187,7 @@ export default class mingxin extends Component {
                         return othermenus.push(val)
                     }
                 })
+               // console.error(othermenus)
                 this.setState({
                     zhijiemenu: zhijiemenus,
                     gengdanmenu: gengdanmenus,
